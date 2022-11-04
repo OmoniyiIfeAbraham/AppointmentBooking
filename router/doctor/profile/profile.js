@@ -11,7 +11,8 @@ router.get('/', async(req, res) => {
             const profile = await registerMod.findOne({ email: sess.email })
             console.log(profile)
             if (profile.completeProfile == false) {
-                res.render('doctor/profile/completeProfile')
+                const id = profile._id
+                res.render('doctor/profile/completeProfile', { id, check: false, msg: '' })
             } else {
                 res.render('doctor/profile/profile')
             }

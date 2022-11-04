@@ -63,11 +63,13 @@ const doctorProfile = new Schema({
     },
     identity: {
         type: String,
-        required: true
+        required: true,
+        default: ' '
     },
     identityPublicID: {
         type: String,
-        required: true
+        required: true,
+        default: ' '
     }
 })
 

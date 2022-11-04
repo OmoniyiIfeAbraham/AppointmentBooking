@@ -56,29 +56,111 @@
         }
       </style>
 </head>
-<body onload="load()">
-    <div id="popup1" class="overlay">
+<body onload="All()">
+  <p><%= check %></p>
+  <p><%= id %></p>
+  <br>
+  <br>
+    <div id="<%= id %>" class="overlay">
+      <p><%= msg %></p>
         <div class="popup">
           <h2>Complete Profile</h2>
           <a class="close" href="">&times;</a>
           <div class="content">
-           <form action="" method="POST">
+           <form action="/completeProfile/<%= id %>" method="POST" enctype="multipart/form-data">
             <label for="dob">Date of Birth: </label>
-            <input type="date" name="dob" id="dob">
+            <input type="date" name="dob" id="dob" required>
             <br>
-            <label for="address">Current Address</label>
-            <input type="text" name="address" id="address">
+            <label for="address">Current Address: </label>
+            <input type="text" name="address" id="address" required>
             <br>
-            <select name="stateOfOrigin" id="stateOfOrigin">
-              
+            <label for="stateOfOrigin">State of Origin: </label>
+              <select name="stateOfOrigin" id="stateOfOrigin" required>
+                <option disabled selected>--Select State--</option>
+                <option value="Abia">Abia</option>
+                <option value="Adamawa">Adamawa</option>
+                <option value="Akwa Ibom">Akwa Ibom</option>
+                <option value="Anambra">Anambra</option>
+                <option value="Bauchi">Bauchi</option>
+                <option value="Bayelsa">Bayelsa</option>
+                <option value="Benue">Benue</option>
+                <option value="Borno">Borno</option>
+                <option value="Cross River">Cross River</option>
+                <option value="Delta">Delta</option>
+                <option value="Ebonyi">Ebonyi</option>
+                <option value="Edo">Edo</option>
+                <option value="Ekiti">Ekiti</option>
+                <option value="Enugu">Enugu</option>
+                <option value="FCT">Federal Capital Territory</option>
+                <option value="Gombe">Gombe</option>
+                <option value="Imo">Imo</option>
+                <option value="Jigawa">Jigawa</option>
+                <option value="Kaduna">Kaduna</option>
+                <option value="Kano">Kano</option>
+                <option value="Katsina">Katsina</option>
+                <option value="Kebbi">Kebbi</option>
+                <option value="Kogi">Kogi</option>
+                <option value="Kwara">Kwara</option>
+                <option value="Lagos">Lagos</option>
+                <option value="Nasarawa">Nasarawa</option>
+                <option value="Niger">Niger</option>
+                <option value="Ogun">Ogun</option>
+                <option value="Ondo">Ondo</option>
+                <option value="Osun">Osun</option>
+                <option value="Oyo">Oyo</option>
+                <option value="Plateau">Plateau</option>
+                <option value="Rivers">Rivers</option>
+                <option value="Sokoto">Sokoto</option>
+                <option value="Taraba">Taraba</option>
+                <option value="Yobe">Yobe</option>
+                <option value="Zamfara">Zamfara</option>
             </select>
+            <br>
+            <label for="maritalStatus">Marital Status: </label>
+            <select name="maritalStatus" id="maritalStatus" required>
+              <option disabled selected>--Select Status--</option>
+              <option value="married">Married</option>
+              <option value="single">Single</option>
+              <option value="Divorced">Divorced</option>
+              <option value="seperated">Separated</option>
+            </select>
+            <br>
+            <label for="permit">Doctors Permit: </label>
+            <input type="file" name="permit" id="permit" required>
+            <br>
+            <input type="submit" value="Next">
            </form>
           </div>
         </div>
       </div>
+
+
+      <div id="boom" class="overlay">
+        <p><%= msg %></p>
+          <div class="popup">
+            <h2>Complete Profile</h2>
+            <a class="close" href="">&times;</a>
+            <div class="content">
+              <form action="/completeProfile/<%= id %>/identity" method="POST" enctype="multipart/form-data">
+                <label for="identity">Proof of Identity(i.e NIN, Drivers Liscense, International Passport): </label>
+                <input type="file" name="identity" id="identity" required>
+                <br>
+                <input type="submit" value="CompleteProfile">
+              </form>
+            </div>
+          </div>
+        </div>
       <script>
         function load() {
-            window.location.href = "#popup1";
+            window.location.href = "#<%= id %>";
+        }
+        function load2() {
+            window.location.href = "#boom";
+            document.getElementById("<%= id %>").style.display = "none"
+        }
+        function All(){
+          console.log("<%= check %>")
+          <%= check %> ? load2() : load()
         }
       </script>
 </body>
