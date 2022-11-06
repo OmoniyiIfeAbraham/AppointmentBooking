@@ -61,6 +61,11 @@ const doctorProfile = new Schema({
         type: String,
         required: true
     },
+    permitApprove:{
+        type: Boolean,
+        required: true,
+        default: false
+    },
     identity: {
         type: String,
         required: true,
@@ -70,6 +75,11 @@ const doctorProfile = new Schema({
         type: String,
         required: true,
         default: ' '
+    },
+    identityApprove: {
+        type: Boolean,
+        required: true,
+        default: false
     }
 })
 

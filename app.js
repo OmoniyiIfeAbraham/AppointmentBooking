@@ -58,6 +58,7 @@ app.use('/', require('./router/index'))
 // ADMIN
 app.use('/admin', require('./router/admin/home')) // admin home
 app.use('/adminLogin', require('./router/admin/adminLogin')) // admin login
+app.use('/patients', require('./router/admin/patients/patients')) // view patients
 
 // DOCTOR        res.render('doctor/auth/login', { msg: `${err.message}`})
 app.use('/doctor', require('./router/doctor/profile/profile')) // doctor profile
@@ -69,3 +70,4 @@ app.use('/completeProfile', require('./router/doctor/profile/completeProfile')) 
 app.use('/patient', require('./router/patient/profile/profile')) // patient profile
 app.use('/patientLogin', require('./router/patient/auth/login')) // patient login
 app.use('/patientRegister', require('./router/patient/auth/register')) // patient register
+app.use('/completePatientProfile', require('./router/patient/profile/completeProfile')) // complete profile
