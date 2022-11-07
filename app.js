@@ -59,6 +59,10 @@ app.use('/', require('./router/index'))
 app.use('/admin', require('./router/admin/home')) // admin home
 app.use('/adminLogin', require('./router/admin/adminLogin')) // admin login
 app.use('/patients', require('./router/admin/patients/patients')) // view patients
+app.use('/viewPatient', require('./router/admin/patients/viewPatient')) // view patient
+app.use('/deletePatient', require('./router/admin/patients/deletePatient')) // delete patient
+app.use('/doctors', require('./router/admin/doctors/doctors')) // view doctors
+app.use('/viewDoctor', require('./router/admin/doctors/viewDoctor')) // view doctor
 
 // DOCTOR        res.render('doctor/auth/login', { msg: `${err.message}`})
 app.use('/doctor', require('./router/doctor/profile/profile')) // doctor profile
