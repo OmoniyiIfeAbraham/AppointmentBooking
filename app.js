@@ -63,6 +63,7 @@ app.use('/viewPatient', require('./router/admin/patients/viewPatient')) // view 
 app.use('/deletePatient', require('./router/admin/patients/deletePatient')) // delete patient
 app.use('/doctors', require('./router/admin/doctors/doctors')) // view doctors
 app.use('/viewDoctor', require('./router/admin/doctors/viewDoctor')) // view doctor
+app.use('/approve', require('./router/admin/doctors/approve')) // approve identities
 
 // DOCTOR        res.render('doctor/auth/login', { msg: `${err.message}`})
 app.use('/doctor', require('./router/doctor/profile/profile')) // doctor profile

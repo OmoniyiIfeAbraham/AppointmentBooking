@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= info.firstname %> <%= info.lastname %> || Profile</title>
+    <style>
+        .overlay {
+          position: fixed;
+          top: 0;
+          bottom: 0;
+          left: 0;
+          right: 0;
+          background: rgba(0, 0, 0, 0.7);
+          transition: opacity 500ms;
+          visibility: hidden;
+          opacity: 0;
+        }
+        .overlay:target {
+          visibility: visible;
+          opacity: 1;
+        }
+  
+        .popup {
+          margin: 70px auto;
+          padding: 20px;
+          background: #fff;
+          border-radius: 5px;
+          width: 30%;
+          position: relative;
+          transition: all 5s ease-in-out;
+        }
+  
+        .popup h2 {
+          margin-top: 0;
+          color: #333;
+          font-family: Tahoma, Arial, sans-serif;
+        }
+        .popup .close {
+          position: absolute;
+          top: 20px;
+          right: 30px;
+          transition: all 200ms;
+          font-size: 30px;
+          font-weight: bold;
+          text-decoration: none;
+          color: #333;
+        }
+        .popup .close:hover {
+          color: #06d85f;
+        }
+        .popup .content {
+          max-height: 30%;
+          overflow: auto;
+        }
+      </style>
+</head>
+<body>
+    <center>
+        <img style="width: 300px; height: 300px; border-radius: 50%;" src="<%= info.profilePicture %>" alt="<%= info.firstname %> <%= info.lastname %>">
+        <br>
+        <h3><%= info.firstname %> <%= info.lastname %></h3>
+        <h5><%= info.email %></h5>
+        <a href="#fullProfile">View Full Profile</a>
+        <br>
+        <img style="width: 350px; height: 500px; border-radius: 10%; margin-right: 10px;" src="<%= info.permit %>" alt="<%= info.firstname %> <%= info.lastname %>">
+        <form action="/approve">
+            <input type="submit" value="Approve Permit">
+        </form>
+        <img style="width: 350px; height: 500px; border-radius: 10%; margin-left: 10px;" src="<%= info.identity %>" alt="<%= info.firstname %> <%= info.lastname %>">
+        <form action="/approve">
+            <input type="submit" value="Approve Identity">
+        </form>
+        <form action="/approve">
+            <input type="submit" value="Decline Documents">
+        </form>
+    </center>
+    <% const birth = info.dob %>
+    <% const yob = birth.slice(0, 4) %>
+    <% const yobN = parseInt(yob, 10) %>
+    <% const date = new Date() %>
+    <% const realDate = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDay() %>
+    <% const realYear = realDate.slice(0, 4) %>
+    <% const now = parseInt(realYear, 10) %>
+    <% const age = now - yobN %>
+    <center>
+        <div id="fullProfile" class="overlay">
+            <div class="popup">
+              <h2>Dr. <%= info.title %> <%= info.firstname %> <%= info.lastname %></h2>
+              <a class="close" href="">&times;</a>
+              <div class="content">
+                <img style="width: 200px; height: 200px; border-radius: 50%;" src="<%= info.profilePicture %>" alt="<%= info.firstname %> <%= info.lastname %>">
+                <br>
+                <p><b>Email:</b> <%= info.email %></p>
+                <p><b>Gender:</b> <%= info.gender %></p>
+                <p><b>Age:</b> <%= age %></p>
+                <p><b>Address:</b> <%= info.address %></p>
+                <p><b>State Of Origin:</b> <%= info.stateOfOrigin %></p>
+                <p><b>Marital Status:</b> <%= info.maritalStatus %></p>
+              </div>
+            </div>
+          </div>
+    </center>
+</body>
+</html>
