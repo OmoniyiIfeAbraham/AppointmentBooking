@@ -8,7 +8,7 @@ router.get('/:id', async(req, res) => {
     const sess = req.session
     // if (sess.email && sess.password && sess.identifier === 'admin') {
         const info = await profileMod.findById({ _id: id })
-        res.render('admin/doctors/viewDoctor', { info })
+        res.render('admin/doctors/viewDoctor', { info, msg: '' })
     // } else {
     //     res.redirect('/adminLogin')
     // }

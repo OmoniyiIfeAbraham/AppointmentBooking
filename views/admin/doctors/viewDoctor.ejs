@@ -57,21 +57,33 @@
       </style>
 </head>
 <body>
+    <p><%= msg %></p>
     <center>
         <img style="width: 300px; height: 300px; border-radius: 50%;" src="<%= info.profilePicture %>" alt="<%= info.firstname %> <%= info.lastname %>">
         <br>
-        <h3><%= info.firstname %> <%= info.lastname %></h3>
+        <h3>Dr. <%= info.firstname %> <%= info.lastname %></h3>
         <h5><%= info.email %></h5>
+        <% if (info.permitApprove == false && info.identityApprove == false) { %>
+            <p><b>Status: </b>Pending</p>
+        <% } else { %>
+            <p><b>Status: </b>Approved</p>
+        <% } %>
         <a href="#fullProfile">View Full Profile</a>
         <br>
-        <img style="width: 350px; height: 500px; border-radius: 10%; margin-right: 10px;" src="<%= info.permit %>" alt="<%= info.firstname %> <%= info.lastname %>">
-        <form action="/approve">
-            <input type="submit" value="Approve Permit">
-        </form>
-        <img style="width: 350px; height: 500px; border-radius: 10%; margin-left: 10px;" src="<%= info.identity %>" alt="<%= info.firstname %> <%= info.lastname %>">
-        <form action="/approve">
-            <input type="submit" value="Approve Identity">
-        </form>
+        <div style="display: flex; width: 100%; height: 500px; justify-content: space-around;">
+            <div style="display: flex; flex-direction: column; height: 450px; width: 40%;">
+                <img style="width: 100%; height: 100%; border-radius: 10%; margin-bottom: 10px;" src="<%= info.permit %>" alt="<%= info.firstname %> <%= info.lastname %>">
+                <form action="/approve/permit/<%= info._id %>">
+                    <input type="submit" value="Approve Permit">
+                </form>
+            </div>
+            <div style="display: flex; flex-direction: column; height: 450px; width: 40%;">
+                <img style="width: 100%; height: 100%; border-radius: 10%; margin-bottom: 10px;" src="<%= info.identity %>" alt="<%= info.firstname %> <%= info.lastname %>">
+                <form action="/approve">
+                    <input type="submit" value="Approve Identity">
+                </form>
+            </div>
+        </div>
         <form action="/approve">
             <input type="submit" value="Decline Documents">
         </form>
