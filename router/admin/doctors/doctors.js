@@ -5,13 +5,13 @@ const profileMod = require('./../../../models/doctor/profile/profile')
 
 router.get('/', async(req, res) => {
     const sess = req.session
-    // if (sess.email && sess.password && sess.identifier === 'admin') {
+    if (sess.email && sess.password && sess.identifier === 'admin') {
         const doctors = await profileMod.find()
         console.log(doctors)
         res.render('admin/doctors/doctors', { doctors, msg: '' })
-    // } else {
-    //     res.redirect('/adminLogin')
-    // }
+    } else {
+        res.redirect('/adminLogin')
+    }
 })
 
 module.exports = router
