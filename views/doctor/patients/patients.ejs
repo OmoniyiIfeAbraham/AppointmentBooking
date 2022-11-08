@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin : Patients</title>
+</head>
+<body>
+    <p><%= msg %></p>
+    <h1>View All Patients</h1>
+    <table>
+        <tr>
+            <th>FullName</th>
+            <th>Age</th>
+            <th>View</th>
+        </tr>
+        <% if (patients.length > 0 ) { %>
+            <% patients.forEach(patient => { %>
+                <% const birth = patient.dob %>
+                <% const yob = birth.slice(0, 4) %>
+                <% const yobN = parseInt(yob, 10) %>
+                <% const date = new Date() %>
+                <% const realDate = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDay() %>
+                <% const realYear = realDate.slice(0, 4) %>
+                <% const now = parseInt(realYear, 10) %>
+                <% const age = now - yobN %>
+                <tr>
+                    <td><%= patient.title %> <%= patient.firstname %> <%= patient.lastname %></td>                  
+                    <td><%= age %></td>
+                    <td><a href="/viewPatientD/<%= patient._id %>">View</a></td>
+                </tr>
+            <% }) %>
+        <% } else { %>
+            <tr>
+                <td>-----</td>
+                <td>-----</td>
+                <td>-----</td>
+            </tr>
+        <% } %>
+    </table>
+</body>
+</html>
