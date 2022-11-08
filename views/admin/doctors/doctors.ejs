@@ -31,10 +31,10 @@
                     <tr>
                         <td>Dr. <%= doctor.firstname %> <%= doctor.lastname %></td>
                         <td><%= age %></td>
-                        <% if (doctor.permitApprove == false && doctor.identityApprove == false) { %>
-                            <td>Pending</td>
+                        <% if (doctor.permitApprove == true && doctor.identityApprove == true) { %>
+                            <td>Approved</td>
                         <% } else { %>
-                            <td>Qualified</td>
+                            <td>Pending</td>
                         <% } %>
                         <td><a href="/viewDoctor/<%= doctor._id %>">View</a></td>
                         <td><a href="#">Delete</a></td>

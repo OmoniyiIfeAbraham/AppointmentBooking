@@ -63,30 +63,44 @@
         <br>
         <h3>Dr. <%= info.firstname %> <%= info.lastname %></h3>
         <h5><%= info.email %></h5>
-        <% if (info.permitApprove == false && info.identityApprove == false) { %>
-            <p><b>Status: </b>Pending</p>
-        <% } else { %>
+        <% if (info.permitApprove == true && info.identityApprove == true) { %>
             <p><b>Status: </b>Approved</p>
+        <% } else { %>
+            <p><b>Status: </b>Pending</p>
         <% } %>
         <a href="#fullProfile">View Full Profile</a>
         <br>
         <div style="display: flex; width: 100%; height: 500px; justify-content: space-around;">
             <div style="display: flex; flex-direction: column; height: 450px; width: 40%;">
                 <img style="width: 100%; height: 100%; border-radius: 10%; margin-bottom: 10px;" src="<%= info.permit %>" alt="<%= info.firstname %> <%= info.lastname %>">
-                <form action="/approve/permit/<%= info._id %>">
+                <% if (info.permitApprove == false) { %>
+                  <form action="/approve/permit/<%= info._id %>">
                     <input type="submit" value="Approve Permit">
-                </form>
+                  </form>
+                <% } else { %>
+                  <h3>CONFIRMED</h3>
+                <% } %>
             </div>
             <div style="display: flex; flex-direction: column; height: 450px; width: 40%;">
                 <img style="width: 100%; height: 100%; border-radius: 10%; margin-bottom: 10px;" src="<%= info.identity %>" alt="<%= info.firstname %> <%= info.lastname %>">
-                <form action="/approve">
+                <% if (info.identityApprove == false) { %>
+                  <form action="/approve/identity/<%= info._id %>">
                     <input type="submit" value="Approve Identity">
                 </form>
+                <% } else { %>
+                  <h3>CONFIRMED</h3>
+                <% } %>
             </div>
         </div>
-        <form action="/approve">
-            <input type="submit" value="Decline Documents">
-        </form>
+        <% if (info.permitApprove == true && info.identityApprove == true) { %>
+          <form action="/approve/revoke/<%= info._id %>">
+            <input type="submit" value="Revoke Approvals">
+          </form>
+        <% } else { %>
+          <form action="/approve/decline/<%= info._id %>">
+            <input type="submit" value="Decline All Documents">
+          </form>
+        <% } %>
     </center>
     <% const birth = info.dob %>
     <% const yob = birth.slice(0, 4) %>
