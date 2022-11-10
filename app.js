@@ -73,6 +73,7 @@ app.use('/doctorLogin', require('./router/doctor/auth/login')) // doctor login
 app.use('/completeProfile', require('./router/doctor/profile/completeProfile')) // complete profile
 app.use('/patientsD', require('./router/doctor/patients/patients')) // view patients
 app.use('/viewPatientD', require('./router/doctor/patients/viewPatient')) // view patient
+app.use('/schedules', require('./router/doctor/shedules/schedules')) // view appointments
 
 // PATIENT
 app.use('/patient', require('./router/patient/profile/profile')) // patient profile

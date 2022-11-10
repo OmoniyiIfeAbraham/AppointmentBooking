@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Schedules</title>
+    <style>
+        .overlay {
+          position: fixed;
+          top: 0;
+          bottom: 0;
+          left: 0;
+          right: 0;
+          background: rgba(0, 0, 0, 0.7);
+          transition: opacity 500ms;
+          visibility: hidden;
+          opacity: 0;
+        }
+        .overlay:target {
+          visibility: visible;
+          opacity: 1;
+        }
+  
+        .popup {
+          margin: 70px auto;
+          padding: 20px;
+          background: #fff;
+          border-radius: 5px;
+          width: 30%;
+          position: relative;
+          transition: all 5s ease-in-out;
+        }
+  
+        .popup h2 {
+          margin-top: 0;
+          color: #333;
+          font-family: Tahoma, Arial, sans-serif;
+        }
+        .popup .close {
+          position: absolute;
+          top: 20px;
+          right: 30px;
+          transition: all 200ms;
+          font-size: 30px;
+          font-weight: bold;
+          text-decoration: none;
+          color: #333;
+        }
+        .popup .close:hover {
+          color: #06d85f;
+        }
+        .popup .content {
+          max-height: 30%;
+          overflow: auto;
+        }
+      </style>
+</head>
+<body>
+  <p><%= msg %></p>
+    <h1>Schedules</h1>
+    <form action="#schedule" method="GET">
+        <input type="submit" value="Add Schedule">
+    </form> 
+    <table>
+      <tr>
+        <th>Created At</th>
+        <th>Start</th>
+        <th>End</th>
+        <th>Status</th>
+        <th>View</th>
+        <th>Delete</th>
+      </tr>
+      <tr>
+        <% if (schedules.length > 0) { %>
+          <% schedules.forEach(schedule => { %>
+            <% const createdAtEvent = new Date(schedule.createdAt) %>
+            <% const createdAtTime = createdAtEvent.toLocaleTimeString('en-US') %>
+            <% const startEvent = new Date(schedule.start) %>
+            <% const startTime = startEvent.toLocaleTimeString('en-US') %>
+            <% const endEvent = new Date(schedule.end) %>
+            <% const endTime = endEvent.toLocaleTimeString('en-US') %>
+            <tr>
+              <td><%= createdAtEvent.toLocaleString() %></td>
+              <td><%= startEvent.toLocaleString() %></td>
+              <td><%= endEvent.toLocaleString() %></td>
+              <% if (schedule.active == false) { %>
+                <td>Pending</td>
+              <% } else { %>
+                <td>Live</td>
+              <% } %>
+              <td><a href="#">View</a></td>
+              <td><a href="#">Delete</a></td>
+            </tr>
+          <% }) %>
+        <% } else { %>
+          <tr>
+            <td>------</td>
+            <td>------</td>
+            <td>------</td>
+            <td>------</td>
+            <td>------</td>
+            <td>------</td>
+          </tr>
+        <% } %>
+      </tr>
+    </table>
+    <div id="schedule" class="overlay">
+        <p><%= msg %></p>
+          <div class="popup">
+            <h2>Create Schedule</h2>
+            <a class="close" href="">&times;</a>
+            <div class="content">
+              <form action="/schedules/<%= id %>" method="POST" enctype="multipart/form-data">
+                <label for="start">Start Time & date</label>
+                <input type="datetime-local" name="start" id="start">
+                <br>
+                <label for="end">End Time & date</label>
+                <input type="datetime-local" name="end" id="end">
+                <br>
+                <input type="submit" value="Create">
+              </form>
+            </div>
+          </div>
+        </div>
+</body>
+</html>
