@@ -113,10 +113,10 @@
             <div class="content">
               <form action="/schedules/<%= id %>" method="POST" enctype="multipart/form-data">
                 <label for="start">Start Time & date</label>
-                <input type="datetime-local" name="start" id="start">
+                <input type="datetime-local" name="start" id="start" required>
                 <br>
                 <label for="end">End Time & date</label>
-                <input type="datetime-local" name="end" id="end">
+                <input type="datetime-local" name="end" id="end" required>
                 <br>
                 <input type="submit" value="Create">
               </form>
