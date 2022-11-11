@@ -6,7 +6,7 @@ const check = require('node-schedule')
 const scheduleMod = require('./../../../models/doctor/schedule/schedule')
 
 router.get('/:id', async(req, res, next) => {
-    const schedules = await scheduleMod.find().sort({ createdAt: -1 })
+    const schedules = await scheduleMod.find({ doctor: req.params.id }).sort({ createdAt: -1 })
     const Time = new Date()
     schedules.forEach(schedule => {
         const a = new Date(schedule.start)
@@ -51,7 +51,7 @@ router.get('/:id', async(req, res, next) => {
 
 router.post('/:id', async(req, res, next) => {
     console.log(req.body)
-    const schedules = await scheduleMod.find().sort({ createdAt: -1 })
+    const schedules = await scheduleMod.find({ doctor: req.params.id }).sort({ createdAt: -1 })
     const id = req.params.id
     const start = req.body.start
     // console.log(start)
@@ -73,105 +73,73 @@ router.post('/:id', async(req, res, next) => {
         if (start != null && end != null) {
             const sameStart = await scheduleMod.findOne({ doctor: id, start: start })
             const sameEnd = await scheduleMod.findOne({ doctor: id, end: end })
-            if (sameStart != null && sameEnd != null) {
-                const S = new Date(sameStart.start)
-                const E = new Date(sameEnd.end)
-                if (sameStart && sameEnd || ms2 >= S.getTime() && ms3 <= E.getTime()) {
-                    res.render('doctor/schedules/schedules', { msg: 'Schedule is already Occupied', id, schedules })
+            const same = await scheduleMod.find({ doctor: id })
+            for (let i = 0; i <= same.length; i++) {
+                console.log(same[i])
+                const look = same[i]
+                console.log(look.start + 'look Start')
+                const S = new Date(look.start)
+                const E = new Date(look.end)
+                console.log(S + 'SSS')
+                console.log(E + 'EEE')
+                if (S.getTime() <= ms2 && E.getTime() >= ms3) {
+                    res.render('doctor/schedules/schedules', { msg: 'Schedule Cant be In-Between Another Schedule', id, schedules })
+                    break;
                 } else {
-                    if (ms2  < ms1) {
-                        res.render('doctor/schedules/schedules', { msg: 'Start Date/Time Cannot be less than Current Date/Time', id, schedules })
-                    } else {
-                        if (ms3 < ms1) {
-                            res.render('doctor/schedules/schedules', { msg: 'End Date/Time Cannot be less than Current Date/Time', id, schedules })
+                    async function much() {
+                        if (sameStart && sameEnd) {
+                            res.render('doctor/schedules/schedules', { msg: 'Schedule is already Occupied', id, schedules })
                         } else {
-                            if (ms3 < ms2) {
-                                res.render('doctor/schedules/schedules', { msg: 'End Date/Time Cannot be less than Start Date/Time', id, schedules })
+                            if (ms2  < ms1) {
+                                res.render('doctor/schedules/schedules', { msg: 'Start Date/Time Cannot be less than Current Date/Time', id, schedules })
                             } else {
-                                if (ms2 == ms3) {
-                                    res.render('doctor/schedules/schedules', { msg: 'Start Date/Time Cannot be equal to End Date/Time', id, schedules })
+                                if (ms3 < ms1) {
+                                    res.render('doctor/schedules/schedules', { msg: 'End Date/Time Cannot be less than Current Date/Time', id, schedules })
                                 } else {
-                                    const schedule = new scheduleMod({
-                                        doctor: id,
-                                        start: start,
-                                        end: end
-                                    })
-                                    await schedule.save()
-                                    check.scheduleJob(a, () => {
-                                            scheduleMod.findByIdAndUpdate({ _id: schedule._id }, { active: true }, (err, docs) => {
-                                                if (err) {
-                                                    console.log(err)
-                                                    next(err)
-                                                } else {
-                                                    // res.redirect(`/schedules/${id}`)
-                                                }
+                                    if (ms3 < ms2) {
+                                        res.render('doctor/schedules/schedules', { msg: 'End Date/Time Cannot be less than Start Date/Time', id, schedules })
+                                    } else {
+                                        if (ms2 == ms3) {
+                                            res.render('doctor/schedules/schedules', { msg: 'Start Date/Time Cannot be equal to End Date/Time', id, schedules })
+                                        } else {
+                                            const schedule = new scheduleMod({
+                                                doctor: id,
+                                                start: start,
+                                                end: end
                                             })
-                                        })
-                                        check.scheduleJob(b, () => {
-                                            scheduleMod.findByIdAndDelete({ _id: schedule._id }, (err, docs) => {
-                                                if (err) {
-                                                    console.log(err)
-                                                    next(err)
-                                                } else {
-                                                    // res.redirect(`/schedules/${id}`)
-                                                }
+                                            await schedule.save()
+                                            check.scheduleJob(a, () => {
+                                                    scheduleMod.findByIdAndUpdate({ _id: schedule._id }, { active: true }, (err, docs) => {
+                                                        if (err) {
+                                                            console.log(err)
+                                                            next(err)
+                                                        } else {
+                                                            // res.redirect(`/schedules/${id}`)
+                                                        }
+                                                    })
+                                                })
+                                                check.scheduleJob(b, () => {
+                                                    scheduleMod.findByIdAndDelete({ _id: schedule._id }, (err, docs) => {
+                                                        if (err) {
+                                                            console.log(err)
+                                                            next(err)
+                                                        } else {
+                                                            // res.redirect(`/schedules/${id}`)
+                                                        }
+                                                    })
                                             })
-                                    })
-                                    res.redirect(`/schedules/${id}`)
+                                            res.redirect(`/schedules/${id}`)
+                                        }
+                                    }
                                 }
                             }
                         }
                     }
-                }
-            } else {
-                if (sameStart && sameEnd) {
-                    res.render('doctor/schedules/schedules', { msg: 'Schedule is already Occupied', id, schedules })
-                } else {
-                    if (ms2  < ms1) {
-                        res.render('doctor/schedules/schedules', { msg: 'Start Date/Time Cannot be less than Current Date/Time', id, schedules })
-                    } else {
-                        if (ms3 < ms1) {
-                            res.render('doctor/schedules/schedules', { msg: 'End Date/Time Cannot be less than Current Date/Time', id, schedules })
-                        } else {
-                            if (ms3 < ms2) {
-                                res.render('doctor/schedules/schedules', { msg: 'End Date/Time Cannot be less than Start Date/Time', id, schedules })
-                            } else {
-                                if (ms2 == ms3) {
-                                    res.render('doctor/schedules/schedules', { msg: 'Start Date/Time Cannot be equal to End Date/Time', id, schedules })
-                                } else {
-                                    const schedule = new scheduleMod({
-                                        doctor: id,
-                                        start: start,
-                                        end: end
-                                    })
-                                    await schedule.save()
-                                    check.scheduleJob(a, () => {
-                                            scheduleMod.findByIdAndUpdate({ _id: schedule._id }, { active: true }, (err, docs) => {
-                                                if (err) {
-                                                    console.log(err)
-                                                    next(err)
-                                                } else {
-                                                    // res.redirect(`/schedules/${id}`)
-                                                }
-                                            })
-                                        })
-                                        check.scheduleJob(b, () => {
-                                            scheduleMod.findByIdAndDelete({ _id: schedule._id }, (err, docs) => {
-                                                if (err) {
-                                                    console.log(err)
-                                                    next(err)
-                                                } else {
-                                                    // res.redirect(`/schedules/${id}`)
-                                                }
-                                            })
-                                    })
-                                    res.redirect(`/schedules/${id}`)
-                                }
-                            }
-                        }
-                    }
+                    much()
                 }
             }
+            // same.forEach(same => {
+            // })
         } else {
             res.render('doctor/schedules/schedules', { msg: 'Fill all the Fields', id, schedules })
         }
