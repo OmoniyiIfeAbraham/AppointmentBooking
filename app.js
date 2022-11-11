@@ -75,6 +75,7 @@ app.use('/patientsD', require('./router/doctor/patients/patients')) // view pati
 app.use('/viewPatientD', require('./router/doctor/patients/viewPatient')) // view patient
 app.use('/schedules', require('./router/doctor/shedules/schedules')) // view appointments
 app.use('/deleteSchedule', require('./router/doctor/shedules/deleteSchedule')) // delete Schedule
+app.use('/viewSchedule', require('./router/doctor/shedules/viewSchedule')) // view Schedule
 
 // PATIENT
 app.use('/patient', require('./router/patient/profile/profile')) // patient profile

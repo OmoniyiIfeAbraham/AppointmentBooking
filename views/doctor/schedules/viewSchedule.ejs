@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Schedule</title>
+</head>
+<body>
+    <% const start = new Date(schedule.start).toLocaleString() %>
+    <% const end = new Date(schedule.end).toLocaleString() %>
+    <center>
+        <h3>From: <i><%= start %></i> To: <i><%= end %></i></h3>
+        <% if (schedule.active == false) { %>
+            <h4>Status: <i>Pending</i></h4>
+          <% } else { %>
+            <h4>Status: <i>Live</i></h4>
+          <% } %>
+          <br>
+          <h1>Bookings</h1>
+    </center>
+</body>
+</html>

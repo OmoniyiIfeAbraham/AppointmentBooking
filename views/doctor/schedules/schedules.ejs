@@ -90,7 +90,7 @@
                 <td>Live</td>
               <% } %>
               <% const bam = id %>
-              <td><a href="#">View</a></td>
+              <td><a href="/viewSchedule/<%= schedule._id %>">View</a></td>
               <td><a href="/deleteSchedule/<%= bam %>/<%= schedule._id %>">Delete</a></td>
             </tr>
           <% }) %>
