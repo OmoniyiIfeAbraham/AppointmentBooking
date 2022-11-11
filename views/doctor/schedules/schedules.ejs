@@ -89,8 +89,9 @@
               <% } else { %>
                 <td>Live</td>
               <% } %>
+              <% const bam = id %>
               <td><a href="#">View</a></td>
-              <td><a href="#">Delete</a></td>
+              <td><a href="/deleteSchedule/<%= bam %>/<%= schedule._id %>">Delete</a></td>
             </tr>
           <% }) %>
         <% } else { %>
