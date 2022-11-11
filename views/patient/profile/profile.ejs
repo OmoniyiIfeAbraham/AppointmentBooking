@@ -5,8 +5,173 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Patient : Profile</title>
+    <style>
+        .overlay {
+          position: fixed;
+          top: 0;
+          bottom: 0;
+          left: 0;
+          right: 0;
+          background: rgba(0, 0, 0, 0.7);
+          transition: opacity 500ms;
+          visibility: hidden;
+          opacity: 0;
+        }
+        .overlay:target {
+          visibility: visible;
+          opacity: 1;
+        }
+  
+        .popup {
+          margin: 70px auto;
+          padding: 20px;
+          background: #fff;
+          border-radius: 5px;
+          width: 30%;
+          position: relative;
+          transition: all 5s ease-in-out;
+        }
+  
+        .popup h2 {
+          margin-top: 0;
+          color: #333;
+          font-family: Tahoma, Arial, sans-serif;
+        }
+        .popup .close {
+          position: absolute;
+          top: 20px;
+          right: 30px;
+          transition: all 200ms;
+          font-size: 30px;
+          font-weight: bold;
+          text-decoration: none;
+          color: #333;
+        }
+        .popup .close:hover {
+          color: #06d85f;
+        }
+        .popup .content {
+          max-height: 30%;
+          overflow: auto;
+        }
+      </style>
 </head>
 <body>
-    <h1>Patient Profile</h1>
+    <img style="width: 200px; height: 200px; border-radius: 50%;" src="<%= person.profilePicture %>" alt="<%= person.firstname %> <%= person.lastname %>">
+    <h3><%= person.title %> <%= person.firstname %> <%= person.lastname %></h3>
+    <h5><%= person.email %></h5>
+    <a href="#fullProfile">View Full Profile</a>
+    <% const birth = person.dob %>
+    <% const yob = birth.slice(0, 4) %>
+    <% const yobN = parseInt(yob, 10) %>
+    <% const date = new Date() %>
+    <% const realDate = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDay() %>
+    <% const realYear = realDate.slice(0, 4) %>
+    <% const now = parseInt(realYear, 10) %>
+    <% const age = now - yobN %>
+    <center>
+        <div id="fullProfile" class="overlay">
+            <div class="popup">
+              <h2><%= person.title %> <%= person.firstname %> <%= person.lastname %></h2>
+              <a class="close" href="">&times;</a>
+              <div class="content">
+                <img style="width: 200px; height: 200px; border-radius: 50%;" src="<%= person.profilePicture %>" alt="<%= person.firstname %> <%= person.lastname %>">
+                <br>
+                <p><b>Email:</b> <%= person.email %></p>
+                <p><b>Gender:</b> <%= person.gender %></p>
+                <p><b>Age:</b> <%= age %></p>
+                <p><b>Address:</b> <%= person.address %></p>
+                <p><b>State Of Origin:</b> <%= person.stateOfOrigin %></p>
+                <p><b>Marital Status:</b> <%= person.maritalStatus %></p>
+              </div>
+            </div>
+          </div>
+    </center>
+    <br>
+    <h1>All Appointments</h1>
+    <!-- <% const names = [] %>
+    <% const ids = [] %>
+    <% for (let i = 0; i <= doctors.length; i++) { %>
+        <% names.push(doctors[i]) %>
+    <% } %>
+    <% doctors.forEach(doctor => { %>
+      <p><%= doctor.firstname %> <%= doctor.lastname %></p>
+    <% }) %> -->
+    <!-- <p><%= doctors.length %></p> -->
+    <table>
+        <tr>
+            <th>Doctor</th>
+            <th>Start</th>
+            <th>End</th>
+            <th>Status</th>
+            <th>Book Now</th>
+            <th>Remark</th>
+        </tr>
+        <tr>
+            <% if (schedules.length > 0) { %>
+                <% schedules.forEach(schedule => { %>
+                    <% const createdAtEvent = new Date(schedule.createdAt) %>
+                    <% const createdAtTime = createdAtEvent.toLocaleTimeString('en-US') %>
+                    <% const startEvent = new Date(schedule.start) %>
+                    <% const startTime = startEvent.toLocaleTimeString('en-US') %>
+                    <% const endEvent = new Date(schedule.end) %>
+                    <% const endTime = endEvent.toLocaleTimeString('en-US') %>
+                    <tr>
+                      <% doctors.forEach(doctor => { %>
+                        <% if (doctor._id == schedule.doctor) { %>
+                          <td><a href="#fullProfile/<%= doctor._id %>"><%= doctor.firstname %> <%= doctor.lastname %></a></td>
+                          <center>
+                            <div id="fullProfile/<%= doctor._id %>" class="overlay">
+                                <div class="popup">
+                                  <h2>Dr. <%= doctor.title %> <%= doctor.firstname %> <%= doctor.lastname %></h2>
+                                  <a class="close" href="">&times;</a>
+                                  <div class="content">
+                                    <img style="width: 200px; height: 200px; border-radius: 50%;" src="<%= doctor.profilePicture %>" alt="<%= doctor.firstname %> <%= doctor.lastname %>">
+                                    <br>
+                                    <p><b>Email:</b> <%= doctor.email %></p>
+                                    <p><b>Gender:</b> <%= doctor.gender %></p>
+                                    <p><b>Age:</b> <%= age %></p>
+                                    <p><b>Address:</b> <%= doctor.address %></p>
+                                    <p><b>State Of Origin:</b> <%= doctor.stateOfOrigin %></p>
+                                    <p><b>Marital Status:</b> <%= doctor.maritalStatus %></p>
+                                  </div>
+                                </div>
+                              </div>
+                        </center>
+                        <% } else { %>
+
+                        <% } %>
+                      <% }) %>
+                        <!-- <td><%= schedule.doctor %></td> -->
+                        <td><%= startEvent.toLocaleString() %></td>
+                        <td><%= endEvent.toLocaleString() %></td>
+                        <% if (schedule.active == false) { %>
+                            <td>Pending</td>
+                          <% } else { %>
+                            <td>Live</td>
+                          <% } %>
+                          <td><a href="#">Book Now</a></td>
+                          <td>
+                            <form action="">
+                                <input type="submit" value="Remark" disabled>
+                            </form>
+                          </td>
+                    </tr>
+                <% }) %>
+            <% } else { %>
+                <tr>
+                    <td>------</td>
+                    <td>------</td>
+                    <td>------</td>
+                    <td>------</td>
+                    <td>------</td>
+                    <td>------</td>
+                </tr>
+            <% } %>
+        </tr>
+    </table>
+    <br>
+    <h1>Booked Appointments</h1>
+    <p><%= person._id %></p>
 </body>
 </html>

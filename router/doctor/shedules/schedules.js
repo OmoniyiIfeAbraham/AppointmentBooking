@@ -85,7 +85,7 @@ router.post('/:id', async(req, res, next) => {
                     for (let i = 0; i <= same.length; i++) {
                         console.log(same[i])
                         const look = same[i]
-                        console.log(look.start + 'look Start')
+                        // console.log(look.start + 'look Start')
                         const S = new Date(look.start)
                         const E = new Date(look.end)
                         console.log(S + 'SSS')
@@ -145,6 +145,7 @@ router.post('/:id', async(req, res, next) => {
                             }
                             much()
                         }
+                        break;
                     }
                 } else {
                             async function much() {
