@@ -138,8 +138,6 @@ router.post('/:id', async(req, res, next) => {
                     much()
                 }
             }
-            // same.forEach(same => {
-            // })
         } else {
             res.render('doctor/schedules/schedules', { msg: 'Fill all the Fields', id, schedules })
         }
