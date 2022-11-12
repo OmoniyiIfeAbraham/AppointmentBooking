@@ -82,3 +82,4 @@ app.use('/patient', require('./router/patient/profile/profile')) // patient prof
 app.use('/patientLogin', require('./router/patient/auth/login')) // patient login
 app.use('/patientRegister', require('./router/patient/auth/register')) // patient register
 app.use('/completePatientProfile', require('./router/patient/profile/completeProfile')) // complete profile
+app.use('/book', require('./router/patient/booking/booking')) // Book Appointment

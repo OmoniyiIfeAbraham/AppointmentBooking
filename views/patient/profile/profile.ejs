@@ -150,7 +150,14 @@
                           <% } else { %>
                             <td>Live</td>
                           <% } %>
-                          <td><a href="#">Book Now</a></td>
+                          <% const SID = schedule._id %>
+                          <% const DID = schedule.doctor %>
+                          <% const PID = person._id %>
+                          <td>
+                            <form action="/patient/book/<%= SID %>/<%= DID %>/<%= PID %>" method="POST">
+                              <input type="submit" value="Book Now">
+                            </form>
+                          </td>
                           <td>
                             <form action="">
                                 <input type="submit" value="Remark" disabled>
