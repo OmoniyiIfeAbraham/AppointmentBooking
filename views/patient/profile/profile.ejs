@@ -57,6 +57,7 @@
       </style>
 </head>
 <body>
+  <p><%= msg %></p>
     <img style="width: 200px; height: 200px; border-radius: 50%;" src="<%= person.profilePicture %>" alt="<%= person.firstname %> <%= person.lastname %>">
     <h3><%= person.title %> <%= person.firstname %> <%= person.lastname %></h3>
     <h5><%= person.email %></h5>
@@ -154,10 +155,32 @@
                           <% const DID = schedule.doctor %>
                           <% const PID = person._id %>
                           <td>
-                            <form action="/patient/book/<%= SID %>/<%= DID %>/<%= PID %>" method="POST">
+                            <!-- <form action="#booking/<%= SID %>/<%= DID %>/<%= PID %>" method="GET">
                               <input type="submit" value="Book Now">
-                            </form>
+                            </form>  -->
+                            <a href="#booking/<%= SID %>/<%= DID %>/<%= PID %>">Book Now</a>
+                            <!-- <form action="/book/<%= SID %>/<%= DID %>/<%= PID %>" method="POST">
+                              <input type="submit" value="Book Now">
+                            </form> -->
                           </td>
+                          <div id="booking/<%= SID %>/<%= DID %>/<%= PID %>" class="overlay">
+                              <div class="popup">
+                                <h2>Book Appointment Time/Date</h2>
+                                <a class="close" href="">&times;</a>
+                                <div class="content">
+                                  <p><b>Note: </b>Time/Date must be Between <%= startEvent.toLocaleString() %> and <%= endEvent.toLocaleString() %></p>
+                                  <form action="/book/<%= SID %>/<%= DID %>/<%= PID %>" method="POST" enctype="multipart/form-data">
+                                    <label for="start">Start Time & date</label>
+                                    <input type="datetime-local" name="start" id="start" required>
+                                    <br>
+                                    <label for="end">End Time & date</label>
+                                    <input type="datetime-local" name="end" id="end" required>
+                                    <br>
+                                    <input type="submit" value="Book">
+                                  </form>
+                                </div>
+                              </div>
+                            </div>
                           <td>
                             <form action="">
                                 <input type="submit" value="Remark" disabled>
