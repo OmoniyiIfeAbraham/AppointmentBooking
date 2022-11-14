@@ -106,7 +106,6 @@
             <th>End</th>
             <th>Status</th>
             <th>Book Now</th>
-            <th>Remark</th>
         </tr>
         <tr>
             <% if (schedules.length > 0) { %>
@@ -181,16 +180,10 @@
                                 </div>
                               </div>
                             </div>
-                          <td>
-                            <form action="">
-                                <input type="submit" value="Remark" disabled>
-                            </form>
-                          </td>
                     </tr>
                 <% }) %>
             <% } else { %>
                 <tr>
-                    <td>------</td>
                     <td>------</td>
                     <td>------</td>
                     <td>------</td>
@@ -203,5 +196,75 @@
     <br>
     <h1>Booked Appointments</h1>
     <p><%= person._id %></p>
+    <table>
+      <tr>
+          <th>Doctor</th>
+          <th>Booked Start Time/Date</th>
+          <th>Booked End Time/Date</th>
+          <th>Status</th>
+          <th>Appointment Start Time/Date</th>
+          <th>Appointment End Time/Date</th>
+          <th>Book Now</th>
+      </tr>
+      <tr>
+          <% if (bookings.length > 0) { %>
+              <% bookings.forEach(booking => { %>
+                  <% const createdAtEvent = new Date(booking.createdAt) %>
+                  <% const createdAtTime = createdAtEvent.toLocaleTimeString('en-US') %>
+                  <% const startEvent = new Date(booking.start) %>
+                  <% const startTime = startEvent.toLocaleTimeString('en-US') %>
+                  <% const endEvent = new Date(booking.end) %>
+                  <% const endTime = endEvent.toLocaleTimeString('en-US') %>
+                  <tr>
+                    <% doctors.forEach(doctor => { %>
+                      <% if (doctor._id == booking.doctorID) { %>
+                        <td><a href="#fullProfile/<%= doctor._id %>"><%= doctor.firstname %> <%= doctor.lastname %></a></td>
+                        <center>
+                          <div id="fullProfile/<%= doctor._id %>" class="overlay">
+                              <div class="popup">
+                                <h2>Dr. <%= doctor.title %> <%= doctor.firstname %> <%= doctor.lastname %></h2>
+                                <a class="close" href="">&times;</a>
+                                <div class="content">
+                                  <img style="width: 200px; height: 200px; border-radius: 50%;" src="<%= doctor.profilePicture %>" alt="<%= doctor.firstname %> <%= doctor.lastname %>">
+                                  <br>
+                                  <p><b>Email:</b> <%= doctor.email %></p>
+                                  <p><b>Gender:</b> <%= doctor.gender %></p>
+                                  <p><b>Age:</b> <%= age %></p>
+                                  <p><b>Address:</b> <%= doctor.address %></p>
+                                  <p><b>State Of Origin:</b> <%= doctor.stateOfOrigin %></p>
+                                  <p><b>Marital Status:</b> <%= doctor.maritalStatus %></p>
+                                </div>
+                              </div>
+                            </div>
+                      </center>
+                      <% } else { %>
+
+                      <% } %>
+                    <% }) %>
+                      <td><%= startEvent.toLocaleString() %></td>
+                      <td><%= endEvent.toLocaleString() %></td>
+                      <td>False</td>
+                      <td></td>
+                      <td></td>
+                        <td>
+                          <form action="">
+                            <input type="submit" value="Booked" disabled>
+                          </form>
+                        </td>
+                  </tr>
+              <% }) %>
+          <% } else { %>
+              <tr>
+                  <td>------</td>
+                  <td>------</td>
+                  <td>------</td>
+                  <td>------</td>
+                  <td>------</td>
+                  <td>------</td>
+                  <td>------</td>
+              </tr>
+          <% } %>
+      </tr>
+  </table>
 </body>
 </html>

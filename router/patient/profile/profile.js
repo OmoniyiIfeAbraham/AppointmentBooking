@@ -68,7 +68,23 @@ router.get('/', async(req, res) => {
             } else {
                 const person = await profileMod.findOne({ uniqueID: profile._id })
                 console.log(person._id + " This is the ID OOOOOOOOO")
-                res.render('patient/profile/profile', { msg: ' ', person, schedules, doctors })
+                const bookings = await bookingMod.find({ patientID: person._id }).sort({ createdAt: -1 })
+                console.log(bookings)
+                const ids = []
+                bookings.forEach(booking => {
+                    ids.push(booking.scheduleID)
+                })
+                console.log(ids)
+                const back = []
+                ids.forEach(id => {
+                    async function all() {
+                        const scheduleTimes = await scheduleMod.find({ _id: id })
+                        console.log(scheduleTimes)
+                    }
+                    all()
+                })
+                console.log(back)
+                res.render('patient/profile/profile', { msg: ' ', person, schedules, doctors, bookings, ids })
             }
         } catch(err) {
             console.log(err)
