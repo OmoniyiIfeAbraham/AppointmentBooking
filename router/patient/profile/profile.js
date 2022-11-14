@@ -75,16 +75,20 @@ router.get('/', async(req, res) => {
                     ids.push(booking.scheduleID)
                 })
                 console.log(ids)
-                const back = []
-                ids.forEach(id => {
-                    async function all() {
-                        const scheduleTimes = await scheduleMod.find({ _id: id })
-                        console.log(scheduleTimes)
+                const info = []
+                for (id = 0; id <= ids.length; id++) {
+                    console.log(ids[id])
+                    const one = ids[id]
+                    if (one == undefined) {
+                        break;
+                    } else {
+                        const times = await scheduleMod.findById({ _id: one })
+                        console.log(times)
+                        info.push(times)
                     }
-                    all()
-                })
-                console.log(back)
-                res.render('patient/profile/profile', { msg: ' ', person, schedules, doctors, bookings, ids })
+                }
+                console.log(info)
+                res.render('patient/profile/profile', { msg: ' ', person, schedules, doctors, bookings, info })
             }
         } catch(err) {
             console.log(err)

@@ -195,7 +195,6 @@
     </table>
     <br>
     <h1>Booked Appointments</h1>
-    <p><%= person._id %></p>
     <table>
       <tr>
           <th>Doctor</th>
@@ -243,9 +242,31 @@
                     <% }) %>
                       <td><%= startEvent.toLocaleString() %></td>
                       <td><%= endEvent.toLocaleString() %></td>
-                      <td>False</td>
-                      <td></td>
-                      <td></td>
+                      <% info.forEach(one => { %>
+                        <% if (one._id == booking.scheduleID) { %>
+                          <% if (one.active == false) { %>
+                            <td>Pending</td>
+                          <% } else { %>
+                            <td>Live</td>
+                          <% } %>
+                        <% } else { %>
+
+                        <% } %>
+                      <% }) %>
+                      <% info.forEach(one => { %>
+                        <% if (one._id == booking.scheduleID) { %>
+                          <td><%= new Date(one.start).toLocaleString() %></td>
+                        <% } else { %>
+
+                        <% } %>
+                      <% }) %>
+                      <% info.forEach(one => { %>
+                        <% if (one._id == booking.scheduleID) { %>
+                          <td><%= new Date(one.end).toLocaleString() %></td>
+                        <% } else { %>
+
+                        <% } %>
+                      <% }) %>
                         <td>
                           <form action="">
                             <input type="submit" value="Booked" disabled>
