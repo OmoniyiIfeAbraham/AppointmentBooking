@@ -57,6 +57,9 @@
       </style>
 </head>
 <body>
+  <form action="/logout/patient">
+    <input type="submit" value="LOGOUT">
+  </form>
   <p><%= msg %></p>
     <img style="width: 200px; height: 200px; border-radius: 50%;" src="<%= person.profilePicture %>" alt="<%= person.firstname %> <%= person.lastname %>">
     <h3><%= person.title %> <%= person.firstname %> <%= person.lastname %></h3>
