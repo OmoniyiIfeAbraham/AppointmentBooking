@@ -31,6 +31,14 @@ router.get('/', async(req, res) => {
                         // res.render('doctor/schedules/schedules', { msg: '', id: req.params.id, schedules })
                     }
                 })
+                bookingMod.findOneAndDelete({ scheduleID: schedule._id }, (err, docs) => {
+                    if (err) {
+                        console.log(err)
+                        next(err)
+                    } else { 
+
+                    }
+                })
             } else if (ms2 < ms1) {
                 // console.log('two')
                 if (schedule.active == false) {
