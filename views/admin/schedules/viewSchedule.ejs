@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Schedule</title>
+    <style>
+      .overlay {
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: rgba(0, 0, 0, 0.7);
+        transition: opacity 500ms;
+        visibility: hidden;
+        opacity: 0;
+      }
+      .overlay:target {
+        visibility: visible;
+        opacity: 1;
+      }
+
+      .popup {
+        margin: 70px auto;
+        padding: 20px;
+        background: #fff;
+        border-radius: 5px;
+        width: 30%;
+        position: relative;
+        transition: all 5s ease-in-out;
+      }
+
+      .popup h2 {
+        margin-top: 0;
+        color: #333;
+        font-family: Tahoma, Arial, sans-serif;
+      }
+      .popup .close {
+        position: absolute;
+        top: 20px;
+        right: 30px;
+        transition: all 200ms;
+        font-size: 30px;
+        font-weight: bold;
+        text-decoration: none;
+        color: #333;
+      }
+      .popup .close:hover {
+        color: #06d85f;
+      }
+      .popup .content {
+        max-height: 30%;
+        overflow: auto;
+      }
+    </style>
+</head>
+<body>
+  <form action="/logout/admin">
+    <input type="submit" value="LOGOUT">
+  </form>
+    <% const start = new Date(schedule.start).toLocaleString() %>
+    <% const end = new Date(schedule.end).toLocaleString() %>
+    <center>
+        <h2>From: <i><%= start %></i> To: <i><%= end %></i></h2>
+        <% doctors.forEach(doctor => { %>
+            <% if (doctor._id == schedule.doctor) { %>
+                <h3>Doctor: <%= doctor.firstname %> <%= doctor.lastname %></h3>
+            <% } else { %>
+
+            <% } %>
+        <% }) %>
+        <% if (schedule.active == false) { %>
+            <h4>Status: <i>Pending</i></h4>
+          <% } else { %>
+            <h4>Status: <i>Live</i></h4>
+          <% } %>
+          <br>
+          <h1>Bookings</h1>
+          <table>
+            <tr>
+              <th>Patient</th>
+              <th>Booked Start Time/Date</th>
+              <th>Booked End Time/Date</th>
+              <th>Remarks</th>
+            </tr>
+            <tr>
+              <% if (bookings.length > 0) { %>
+                <% bookings.forEach(booking => { %>
+                  <% const startEvent = new Date(booking.start) %>
+                  <% const startTime = startEvent.toLocaleTimeString('en-US') %>
+                  <% const endEvent = new Date(booking.end) %>
+                  <% const endTime = endEvent.toLocaleTimeString('en-US') %>
+                  <tr>
+                    <% patients.forEach(patient => { %>
+                      <% const birth = patient.dob %>
+                      <% const yob = birth.slice(0, 4) %>
+                      <% const yobN = parseInt(yob, 10) %>
+                      <% const date = new Date() %>
+                      <% const realDate = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDay() %>
+                      <% const realYear = realDate.slice(0, 4) %>
+                      <% const now = parseInt(realYear, 10) %>
+                      <% const age = now - yobN %>
+                      <% if (patient._id == booking.patientID) { %>
+                        <td><a href="#fullProfile/<%= patient._id %>"><%= patient.firstname %> <%= patient.lastname %></a></td>
+                        <center>
+                          <div id="fullProfile/<%= patient._id %>" class="overlay">
+                              <div class="popup">
+                                <h2><%= patient.title %> <%= patient.firstname %> <%= patient.lastname %></h2>
+                                <a class="close" href="">&times;</a>
+                                <div class="content">
+                                  <img style="width: 200px; height: 200px; border-radius: 50%;" src="<%= patient.profilePicture %>" alt="<%= patient.firstname %> <%= patient.lastname %>">
+                                  <br>
+                                  <p><b>Email:</b> <%= patient.email %></p>
+                                  <p><b>Gender:</b> <%= patient.gender %></p>
+                                  <p><b>Age:</b> <%= age %></p>
+                                  <p><b>Address:</b> <%= patient.address %></p>
+                                  <p><b>State Of Origin:</b> <%= patient.stateOfOrigin %></p>
+                                  <p><b>Marital Status:</b> <%= patient.maritalStatus %></p>
+                                </div>
+                              </div>
+                            </div>
+                      </center>
+                      <% } else { %>
+
+                      <% } %>
+                    <% }) %>
+                    <td><%= startEvent.toLocaleString() %></td>
+                    <td><%= endEvent.toLocaleString() %></td>
+                    <td>Remarks</td>
+                  </tr>
+                <% }) %>
+              <% } else { %>
+                <tr>
+                  <td>----</td>
+                  <td>----</td>
+                  <td>----</td>
+                  <td>----</td>
+                </tr>
+              <% } %>
+            </tr>
+          </table>
+    </center>
+</body>
+</html>

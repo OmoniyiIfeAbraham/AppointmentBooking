@@ -66,6 +66,7 @@ app.use('/viewDoctor', require('./router/admin/doctors/viewDoctor')) // view doc
 app.use('/approve', require('./router/admin/doctors/approve')) // approve identities
 app.use('/deleteDoctor', require('./router/admin/doctors/deleteDoctor')) // delete doctor
 app.use('/schedule', require('./router/admin/schedules/schedules')) // view schedules
+app.use('/adminViewSchedule', require('./router/admin/schedules/viewSchedule')) // view individual schedule
 
 // DOCTOR        res.render('doctor/auth/login', { msg: `${err.message}`})
 app.use('/doctor', require('./router/doctor/profile/profile')) // doctor profile
