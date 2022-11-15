@@ -1,6 +1,11 @@
 const express = require('express')
 const app = express()
 
+const socket = require('socket.io')
+const http = require('http')
+
+const server = http.createServer(app);
+
 // dotenv
 require('dotenv').config()
 
@@ -34,16 +39,34 @@ app.use(require('express-fileupload')({ useTempFiles: true }))
 
 // mongoose
 const mongoose = require('mongoose')
-mongoose.connect(process.env.mongo_link, {
-    useUnifiedTopology: true,
-    useNewUrlParser: true,
-}).then(res => {
-    if (res) {
-        console.log('Database Connected')
-        app.listen(PORT, () => console.log(`Running on PORT: ${PORT}`))
-    } else {
-        console.log('Database not connected')
-    }
+// mongoose.connect(process.env.mongo_link, {
+//     useUnifiedTopology: true,
+//     useNewUrlParser: true,
+// }).then(res => {
+//     if (res) {
+//         console.log('Database Connected')
+//         app.listen(PORT, () => console.log(`Running on PORT: ${PORT}`))
+//     } else {
+//         console.log('Database not connected')
+//     }
+// })
+
+// Socket setup
+    mongoose.connect(process.env.mongo_link, {
+        useUnifiedTopology: true,
+        useNewUrlParser: true,
+    }).then(res => {
+        if (res) {
+            console.log('Database Connected')
+            server.listen(PORT, () => console.log(`Running on PORT: ${PORT}`))
+        } else {
+            console.log('Database not connected')
+        }
+    })
+const io = socket(server)
+
+io.on('connection', (socket) => {
+    console.log('made a connection')
 })
 
 // templating

@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Patient : Profile</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.5.3/socket.io.js" integrity="sha512-iWPnCISAd/J+ZacwV2mbNLCaPGRrRo5OS81lKTVPtRg1wGTC20Cfmp5Us5RcbLv42QLdbAWl0MI57yox5VecQg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <style>
         .overlay {
           position: fixed;
@@ -271,7 +272,20 @@
 
                         <% } %>
                       <% }) %>
-                      <td>Remarks</td>
+                      <td>
+                        <a href="#remark">Remark</a>
+                      </td>
+                      <center>
+                        <div id="remark" class="overlay">
+                            <div class="popup">
+                              <h2>Dr</h2>
+                              <a class="close" href="">&times;</a>
+                              <div class="content">
+
+                              </div>
+                            </div>
+                          </div>
+                    </center>
                         <td>
                           <form action="">
                             <input type="submit" value="Booked" disabled>
@@ -293,5 +307,9 @@
           <% } %>
       </tr>
   </table>
+  <script>
+    // Make connection
+    const socket = io.connect('http://localhost:2400')
+  </script>
 </body>
 </html>
