@@ -14,8 +14,8 @@ router.get('/:id', async(req, res) => {
         const bookings = await bookingMod.find({ scheduleID: id }).sort({ createdAt: -1 })
         const patients = await profileMod.find()
         const remarks = await remarkMod.find()
-
-    } else {        res.render('doctor/schedules/viewSchedule', { schedule, bookings, patients, remarks })
+        res.render('doctor/schedules/viewSchedule', { schedule, bookings, patients, remarks, msg: '' })
+    } else {        
         res.redirect('/doctorLogin')
     }
 })
