@@ -46,9 +46,10 @@ router.post('/', async(req, res) => {
                         email: savePerson.email,
                         otp: random
                     })
-                    await auth .save()
+                    await auth.save()
                     sess.email = req.body.email
                     sess.password = req.body.password
+                    sess.name = savePerson._id
                     const mailOption={
                         from: `${process.env.adminName} ${process.env.email}`,
                         to: Email,
@@ -91,12 +92,12 @@ router.post('/otp', async(req, res, next) => {
     const sess = req.session
     console.log(sess)
     const OTP = req.body.otp
-    if (sess.email && sess.password) {
+    if (sess.email && sess.password && sess.name) {
         try {
             const personAuth = await resetMod.findOne({ email: sess.email })
             if (personAuth) {
                 if (OTP != null) {
-                    const check = await resetAuthMod.findOne({ email: sess.email })
+                    const check = await resetAuthMod.findOne({ email: sess.email, uniqueID: sess.name })
                     if (OTP != check.otp) {
                         res.render('doctor/auth/resetOtp', { msg: 'Incorrect OTP' })
                     } else {
