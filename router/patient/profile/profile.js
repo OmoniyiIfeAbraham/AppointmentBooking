@@ -8,6 +8,8 @@ const doctorProfileMod = require('./../../../models/doctor/profile/profile')
 
 const bookingMod = require('./../../../models/patient/bookings/bookings')
 
+const remarkMod = require('./../../../models/remarks/remarks')
+
 router.get('/', async(req, res) => {
     const sess = req.session
     if (sess.email && sess.password && sess.identifier === 'patient') {
@@ -89,14 +91,21 @@ router.get('/', async(req, res) => {
                     const one = ids[id]
                     if (one == undefined) {
                         break;
+                    } else if (one == null) {
+                        break;
                     } else {
                         const times = await scheduleMod.findById({ _id: one })
-                        console.log(times)
-                        info.push(times)
+                        if (times == null) {
+                            break;
+                        } else {
+                            console.log(times)
+                            info.push(times)
+                        }
                     }
                 }
-                console.log(info)
-                res.render('patient/profile/profile', { msg: ' ', person, schedules, doctors, bookings, info })
+                // console.log(info.length)
+                const remarks = await remarkMod.find()
+                res.render('patient/profile/profile', { msg: ' ', person, schedules, doctors, bookings, info, remarks })
             }
         } catch(err) {
             console.log(err)
