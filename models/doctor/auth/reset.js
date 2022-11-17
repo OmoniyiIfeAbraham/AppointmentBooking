@@ -18,4 +18,4 @@ const resetDoctorPassword = new Schema({
     }
 })
 
-module.exports = mongoose.models('ResetDoctorPassword', resetDoctorPassword)
+module.exports = mongoose.model('ResetDoctorPassword', resetDoctorPassword)
