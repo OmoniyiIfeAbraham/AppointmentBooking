@@ -26,7 +26,7 @@ router.post('/:sender/:receiver', async(req, res, next) => {
                     message: message
                 })
                 await remark.save()
-                res.redirect('/patient#/remark')
+                res.redirect(`/patient#remark/${sender}/${receiver}`)
             } else {
 
             }

@@ -318,11 +318,20 @@
                           <% if (one._id == booking.scheduleID) { %>
                             <% const sender = booking.patientID %>
                             <% const receiver = booking.doctorID %>  
+                            <td>
+                              <a href="#remark/<%= sender %>/<%= receiver %>">remark</a>
+                            </td>
                             <center>
-                              <div id="/remark" class="overlay">
+                              <div id="remark/<%= sender %>/<%= receiver %>" class="overlay">
                                   <div class="popup">
                                     <h2>Remarks</h2>
-                                    <p>From: <b>Me</b> To: <b>Dr. </b></p>
+                                    <% doctors.forEach(doctor => { %>
+                                      <% if (doctor._id == receiver) { %>
+                                        <p>From: <b>Me</b> To: <b>Dr. <%= doctor.firstname %> <%= doctor.lastname %>  </b></p>
+                                      <% } else { %>
+
+                                      <% } %>
+                                    <% }) %> 
                                     <a class="close" href="">&times;</a>
                                     <div id="remark-chat">
                                       <div id="remark-window">
@@ -348,9 +357,6 @@
   
                           <% } %>
                         <% }) %>
-                        <td>
-                          <a href="#/remark">remark</a>
-                        </td>
                         <td>
                           <form action="">
                             <input type="submit" value="Booked" disabled>
