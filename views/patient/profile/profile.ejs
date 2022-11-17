@@ -325,6 +325,9 @@
                               <div id="remark/<%= sender %>/<%= receiver %>" class="overlay">
                                   <div class="popup">
                                     <h2>Remarks</h2>
+                                    <form action="">
+                                      <input type="submit" value="Reload" id="reload">
+                                    </form>
                                     <% doctors.forEach(doctor => { %>
                                       <% if (doctor._id == receiver) { %>
                                         <p>From: <b>Me</b> To: <b>Dr. <%= doctor.firstname %> <%= doctor.lastname %>  </b></p>
@@ -381,5 +384,11 @@
           <% } %>
       </tr>
   </table>
+  <script>
+    const reload = document.getElementById("reload")
+    reload.addEventListener('click', () => {
+      location.reload();
+    })
+  </script>
 </body>
 </html>

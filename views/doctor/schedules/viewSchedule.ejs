@@ -161,6 +161,9 @@
                         <div id="remark/<%= sender %>/<%= receiver %>" class="overlay">
                             <div class="popup">
                               <h2>Remarks</h2>
+                              <form action="">
+                                <input type="submit" value="Reload" id="reload">
+                              </form>
                                   <p>From: <b>Me</b> To: <b>Dr.</b></p>
                               <a class="close" href="">&times;</a>
                               <div id="remark-chat">
@@ -206,5 +209,11 @@
             </tr>
           </table>
     </center>
+    <script>
+      const reload = document.getElementById("reload")
+      reload.addEventListener('click', () => {
+        location.reload();
+      })
+    </script>
 </body>
 </html>
