@@ -25,4 +25,4 @@ const resetDoctorAuth = new Schema({
     }
 })
 
-module.exports = mongoose.models('ResetDoctorAuth', resetDoctorAuth)
+module.exports = mongoose.model('ResetDoctorAuth', resetDoctorAuth)
