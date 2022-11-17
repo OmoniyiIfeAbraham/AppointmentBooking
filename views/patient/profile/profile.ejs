@@ -337,7 +337,7 @@
                                       <div id="remark-window">
                                         <div id="output">
                                           <% remarks.forEach(remark => { %>
-                                            <% if (remark.from == sender && remark.to == receiver) { %>
+                                            <% if (remark.from == sender && remark.to == receiver || remark.to == sender && remark.from == receiver) { %>
                                               <p><%= remark.message %> </p>
                                             <% } else { %>
 
@@ -345,7 +345,7 @@
                                           <% }) %> 
                                         </div>
                                       </div>
-                                      <form action="/remark/<%= sender %>/<%= receiver %>" method="post">
+                                      <form action="/remark/p/<%= sender %>/<%= receiver %>" method="post">
                                         <input type="text" name="message" id="message" placeholder="message">
                                         <button type="submit" id="send">Send</button>
                                       </form>
