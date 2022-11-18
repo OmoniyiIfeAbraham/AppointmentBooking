@@ -86,6 +86,7 @@ app.use('/patientLogin', require('./router/patient/auth/login')) // patient logi
 app.use('/patientRegister', require('./router/patient/auth/register')) // patient register
 app.use('/completePatientProfile', require('./router/patient/profile/completeProfile')) // complete profile
 app.use('/book', require('./router/patient/booking/booking')) // Book Appointment
+app.use('/reset', require('./router/patient/auth/reset')) // reset password
 
 // LOGOUT ROUTES
 app.use('/logout', require('./router/logout')) // Logout of session
