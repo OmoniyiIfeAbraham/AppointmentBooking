@@ -14,6 +14,11 @@ const resetDoctorPassword = new Schema({
         type: Boolean,
         required: true,
         default: false
+    },
+    uniqueID: {
+        type: String,
+        required: true,
+        unique: true,
     }
 })
 

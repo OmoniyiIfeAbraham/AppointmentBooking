@@ -101,12 +101,12 @@ router.post('/otp', async(req, res, next) => {
                     if (OTP != check.otp) {
                         res.render('doctor/auth/resetOtp', { msg: 'Incorrect OTP' })
                     } else {
-                        resetAuthMod.findOneAndUpdate({ email: sess.email }, { verified: true }, (err, docs) => {
+                        resetAuthMod.findOneAndUpdate({ email: sess.email, uniqueID: sess.name, verified: false }, { verified: true }, (err, docs) => {
                             if (err) {
                                 console.log(err)
                                 next(err)
                             } else {
-                                resetMod.findOneAndUpdate({ email: sess.email }, { verified: true }, (err, docs) => {
+                                resetMod.findOneAndUpdate({ email: sess.email, verified: false }, { verified: true }, (err, docs) => {
                                     if (err) {
                                         console.log(err)
                                         next(err)
