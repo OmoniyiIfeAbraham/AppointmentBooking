@@ -33,10 +33,12 @@ router.post('/', async(req, res) => {
         if (Email != null && Password != null) {
             if (Password.length >= 6) {
                 const verifyMail = await profileMod.findOne({ email: Email })
+                const not = token.random(10)
                 if (verifyMail) {
                     const person = new resetMod({
                         email: Email,
-                        password: bcrypt.hashSync(Password, 10)
+                        password: bcrypt.hashSync(Password, 10),
+                        uniqueID: not
                     })
                     const savePerson = await person.save()
                     const random = token.random(4)
@@ -50,6 +52,7 @@ router.post('/', async(req, res) => {
                     sess.email = req.body.email
                     sess.password = req.body.password
                     sess.name = savePerson._id
+                    sess.find = person.uniqueID
                     const mailOption={
                         from: `${process.env.adminName} ${process.env.email}`,
                         to: Email,
@@ -94,7 +97,7 @@ router.post('/otp', async(req, res, next) => {
     const OTP = req.body.otp
     if (sess.email && sess.password && sess.name) {
         try {
-            const personAuth = await resetMod.findOne({ email: sess.email })
+            const personAuth = await resetMod.findOne({ email: sess.email, uniqueID: sess.find })
             if (personAuth) {
                 if (OTP != null) {
                     const check = await resetAuthMod.findOne({ email: sess.email, uniqueID: sess.name })
@@ -106,13 +109,13 @@ router.post('/otp', async(req, res, next) => {
                                 console.log(err)
                                 next(err)
                             } else {
-                                resetMod.findOneAndUpdate({ email: sess.email, verified: false }, { verified: true }, (err, docs) => {
+                                resetMod.findOneAndUpdate({ email: sess.email, verified: false, uniqueID: sess.find }, { verified: true }, (err, docs) => {
                                     if (err) {
                                         console.log(err)
                                         next(err)
                                     } else {
                                         async function cont() {
-                                            const person = await resetMod.findOne({ email: sess.email })
+                                            const person = await resetMod.findOne({ email: sess.email, uniqueID: sess.find })
                                             profileMod.findOneAndUpdate({ email: sess.email }, { password: person.password }, (err, docs) => {
                                                 if (err) {
                                                     console.log(err)
