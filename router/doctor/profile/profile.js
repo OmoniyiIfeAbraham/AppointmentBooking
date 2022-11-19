@@ -16,7 +16,7 @@ router.get('/', async(req, res) => {
                 const id = profile._id
                 res.render('doctor/profile/completeProfile', { id, check: false, msg: '' })
             } else {
-                res.render('doctor/profile/profile', { id: person._id })
+                res.render('doctor/profile/profile', { id: person._id, unique: profile._id })
             }
         } catch (err) {
             console.log(err)
