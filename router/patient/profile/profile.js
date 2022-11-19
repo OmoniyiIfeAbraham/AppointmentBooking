@@ -25,20 +25,20 @@ router.get('/', async(req, res) => {
             // console.log(ms2 < ms1)
             if (ms2 < ms1 && ms3 < ms1) {
                 // console.log('one')
-                scheduleMod.findByIdAndDelete({ _id: schedule._id }, (err, docs) => {
-                    if (err) {
-                        console.log(err)
-                        next(err)
-                    } else {
-                        // res.render('doctor/schedules/schedules', { msg: '', id: req.params.id, schedules })
-                    }
-                })
                 bookingMod.findOneAndDelete({ scheduleID: schedule._id }, (err, docs) => {
                     if (err) {
                         console.log(err)
                         next(err)
                     } else { 
-
+                        console.log('Booking deleted from Profile')
+                        scheduleMod.findByIdAndDelete({ _id: schedule._id }, (err, docs) => {
+                            if (err) {
+                                console.log(err)
+                                next(err)
+                            } else {
+                                // res.render('doctor/schedules/schedules', { msg: '', id: req.params.id, schedules })
+                            }
+                        })
                     }
                 })
             } else if (ms2 < ms1) {

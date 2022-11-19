@@ -4,6 +4,7 @@ const router = express.Router()
 const check = require('node-schedule')
 
 const scheduleMod = require('./../../../models/doctor/schedule/schedule')
+const bookingMod = require('./../../../models/patient/bookings/bookings')
 
 router.get('/:id', async(req, res, next) => {
     const sess = req.session
@@ -19,14 +20,30 @@ router.get('/:id', async(req, res, next) => {
             // console.log(ms2 < ms1)
             if (ms2 < ms1 && ms3 < ms1) {
                 // console.log('one')
-                scheduleMod.findByIdAndDelete({ _id: schedule._id }, (err, docs) => {
+                bookingMod.findOneAndDelete({ scheduleID: schedule._id }, (err, docs) => {
                     if (err) {
                         console.log(err)
                         next(err)
-                    } else {
-                        // res.render('doctor/schedules/schedules', { msg: '', id: req.params.id, schedules })
+                    } else { 
+                        console.log('Booking deleted from schedule of doctor')
+                        scheduleMod.findByIdAndDelete({ _id: schedule._id }, (err, docs) => {
+                            if (err) {
+                                console.log(err)
+                                next(err)
+                            } else {
+                                // res.render('doctor/schedules/schedules', { msg: '', id: req.params.id, schedules })
+                            }
+                        })
                     }
                 })
+                // scheduleMod.findByIdAndDelete({ _id: schedule._id }, (err, docs) => {
+                //     if (err) {
+                //         console.log(err)
+                //         next(err)
+                //     } else {
+                //         // res.render('doctor/schedules/schedules', { msg: '', id: req.params.id, schedules })
+                //     }
+                // })
             } else if (ms2 < ms1) {
                 // console.log('two')
                 if (schedule.active == false) {
@@ -181,14 +198,30 @@ router.post('/:id', async(req, res, next) => {
                                                             })
                                                         })
                                                         check.scheduleJob(b, () => {
-                                                            scheduleMod.findByIdAndDelete({ _id: schedule._id }, (err, docs) => {
+                                                            bookingMod.findOneAndDelete({ scheduleID: schedule._id }, (err, docs) => {
                                                                 if (err) {
                                                                     console.log(err)
                                                                     next(err)
-                                                                } else {
-                                                                    // res.redirect(`/schedules/${id}`)
+                                                                } else { 
+                                                                    console.log('Booking deleted from regular')
+                                                                    scheduleMod.findByIdAndDelete({ _id: schedule._id }, (err, docs) => {
+                                                                        if (err) {
+                                                                            console.log(err)
+                                                                            next(err)
+                                                                        } else {
+                                                                            // res.render('doctor/schedules/schedules', { msg: '', id: req.params.id, schedules })
+                                                                        }
+                                                                    })
                                                                 }
                                                             })
+                                                            // scheduleMod.findByIdAndDelete({ _id: schedule._id }, (err, docs) => {
+                                                            //     if (err) {
+                                                            //         console.log(err)
+                                                            //         next(err)
+                                                            //     } else {
+                                                            //         // res.redirect(`/schedules/${id}`)
+                                                            //     }
+                                                            // })
                                                     })
                                                     res.redirect(`/schedules/${id}`)
                                                 }
