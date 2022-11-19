@@ -15,8 +15,10 @@ router.get('/', async(req, res) => {
             if (profile.completeProfile == false) {
                 const id = profile._id
                 res.render('doctor/profile/completeProfile', { id, check: false, msg: '' })
-            } else {
+            } else if (profile.permitApprove == true && profile.identityApprove == true) {
                 res.render('doctor/profile/profile', { id: person._id, unique: profile._id })
+            } else {
+                res.render('doctor/profile/waiting')
             }
         } catch (err) {
             console.log(err)
