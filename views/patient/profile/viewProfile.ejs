@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Profile</title>
+    <style>
+        .overlay {
+          position: fixed;
+          top: 0;
+          bottom: 0;
+          left: 0;
+          right: 0;
+          background: rgba(0, 0, 0, 0.7);
+          transition: opacity 500ms;
+          visibility: hidden;
+          opacity: 0;
+        }
+        .overlay:target {
+          visibility: visible;
+          opacity: 1;
+        }
+  
+        .popup {
+          margin: 70px auto;
+          padding: 20px;
+          background: #fff;
+          border-radius: 5px;
+          width: 30%;
+          position: relative;
+          transition: all 5s ease-in-out;
+        }
+  
+        .popup h2 {
+          margin-top: 0;
+          color: #333;
+          font-family: Tahoma, Arial, sans-serif;
+        }
+        .popup .close {
+          position: absolute;
+          top: 20px;
+          right: 30px;
+          transition: all 200ms;
+          font-size: 30px;
+          font-weight: bold;
+          text-decoration: none;
+          color: #333;
+        }
+        .popup .close:hover {
+          color: #06d85f;
+        }
+        .popup .content {
+          max-height: 80%;
+          overflow: auto;
+        }
+      </style>
+</head>
+<body>
+    <form action="/logout/patient">
+        <input type="submit" value="LOGOUT">
+      </form>
+      <p><%= msg %></p>
+        <img style="width: 200px; height: 200px; border-radius: 50%;" src="<%= patient.profilePicture %>" alt="<%= patient.firstname %> <%= patient.lastname %>">
+        <br>
+        <a href="#UpdateProfilePicture">Update Profile Picture</a>
+        <br>
+        <h3><%= patient.title %> <%= patient.firstname %> <%= patient.lastname %></h3>
+        <% const birth = patient.dob %>
+        <% const yob = birth.slice(0, 4) %>
+        <% const yobN = parseInt(yob, 10) %>
+        <% const date = new Date() %>
+        <% const realDate = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDay() %>
+        <% const realYear = realDate.slice(0, 4) %>
+        <% const now = parseInt(realYear, 10) %>
+        <% const age = now - yobN %>
+        <p><b>Email:</b> <%= patient.email %></p>
+        <p><b>Gender:</b> <%= patient.gender %></p>
+        <p><b>Age:</b> <%= age %></p>
+        <p><b>Address:</b> <%= patient.address %></p>
+        <p><b>State Of Origin:</b> <%= patient.stateOfOrigin %></p>
+        <p><b>Marital Status:</b> <%= patient.maritalStatus %></p>
+        <br>
+            <a href="#UpdateProfile">Update Profile Info</a>
+        <br>
+
+
+        <div id="UpdateProfilePicture" class="overlay">
+            <div class="popup">
+              <a class="close" href="">&times;</a>
+              <div class="content">
+                <h1>Update Profile Picture</h1>
+                <p><%= msg %></p>
+                <form action="/viewProfile/profilePic/<%= patient.uniqueID %>" method="post" enctype="multipart/form-data">
+                    <label for="profilePicture">Profile Picture: </label>
+                    <input type="file" name="profilePicture" id="profilePicture" required>
+                    <br>
+                    <input type="submit" value="Update">
+                </form>
+              </div>
+            </div>
+          </div>
+
+
+          <div id="UpdateProfile" class="overlay">
+            <div class="popup">
+              <a class="close" href="">&times;</a>
+              <div class="content">
+                <h1>Update Profile</h1>
+                <p><%= msg %></p>
+                <form action="/viewProfile/info/<%= patient.uniqueID %>" method="post" enctype="multipart/form-data">
+                    <label for="firstname">Firstname: </label>
+                    <input type="text" name="firstname" id="firstname" value="<%= patient.firstname %>" required>
+                    <br>
+                    <label for="lastname">Lastname: </label>
+                    <input type="text" name="lastname" id="lastname" value="<%= patient.lastname %>" required>
+                    <br>
+                    <label for="gender">Gender: </label>
+                    <select name="gender" id="gender" required>
+                        <option value="<%= patient.gender %>"><%= patient.gender %></option>
+                        <% if (patient.gender == 'Male') { %>
+                            <option value="Female">Female</option>
+                        <% } else { %>
+                            <option value="Female">Male</option>
+                        <% } %> 
+                    </select>
+                    <br>
+                    <label for="title">Title: </label>
+                    <select name="title" id="title" required>
+                        <option selected value="<%= patient.title %>"><%= patient.title %></option>
+                        <option value="Mr.">Mr.</option>
+                        <option value="Mrs.">Mrs.</option>
+                        <option value="Master.">Master.</option>
+                        <option value="Miss.">Miss.</option>
+                    </select>
+                    <br>
+                    <label for="email">Email: </label>
+                    <input type="email" name="email" id="email" value="<%= patient.email %>" required>
+                    <br>
+                    <label for="dob">Date of Birth: </label>
+                    <input type="date" name="dob" id="dob" value="<%= patient.dob %>" required>
+                    <br>
+                    <label for="address">Current Address: </label>
+                    <input type="text" name="address" id="address" value="<%= patient.address %>" required>
+                    <br>
+                    <label for="stateOfOrigin">State of Origin: </label>
+                      <select name="stateOfOrigin" id="stateOfOrigin" required>
+                        <option selected value="<%= patient.stateOfOrigin %>"><%= patient.stateOfOrigin %></option>
+                        <option value="Abia">Abia</option>
+                        <option value="Adamawa">Adamawa</option>
+                        <option value="Akwa Ibom">Akwa Ibom</option>
+                        <option value="Anambra">Anambra</option>
+                        <option value="Bauchi">Bauchi</option>
+                        <option value="Bayelsa">Bayelsa</option>
+                        <option value="Benue">Benue</option>
+                        <option value="Borno">Borno</option>
+                        <option value="Cross River">Cross River</option>
+                        <option value="Delta">Delta</option>
+                        <option value="Ebonyi">Ebonyi</option>
+                        <option value="Edo">Edo</option>
+                        <option value="Ekiti">Ekiti</option>
+                        <option value="Enugu">Enugu</option>
+                        <option value="FCT">Federal Capital Territory</option>
+                        <option value="Gombe">Gombe</option>
+                        <option value="Imo">Imo</option>
+                        <option value="Jigawa">Jigawa</option>
+                        <option value="Kaduna">Kaduna</option>
+                        <option value="Kano">Kano</option>
+                        <option value="Katsina">Katsina</option>
+                        <option value="Kebbi">Kebbi</option>
+                        <option value="Kogi">Kogi</option>
+                        <option value="Kwara">Kwara</option>
+                        <option value="Lagos">Lagos</option>
+                        <option value="Nasarawa">Nasarawa</option>
+                        <option value="Niger">Niger</option>
+                        <option value="Ogun">Ogun</option>
+                        <option value="Ondo">Ondo</option>
+                        <option value="Osun">Osun</option>
+                        <option value="Oyo">Oyo</option>
+                        <option value="Plateau">Plateau</option>
+                        <option value="Rivers">Rivers</option>
+                        <option value="Sokoto">Sokoto</option>
+                        <option value="Taraba">Taraba</option>
+                        <option value="Yobe">Yobe</option>
+                        <option value="Zamfara">Zamfara</option>
+                    </select>
+                    <br>
+                    <label for="maritalStatus">Marital Status: </label>
+                    <select name="maritalStatus" id="maritalStatus" required>
+                      <option selected value="<%= patient.maritalStatus %>"><%= patient.maritalStatus %></option>
+                      <option value="married">Married</option>
+                      <option value="single">Single</option>
+                      <option value="Divorced">Divorced</option>
+                      <option value="seperated">Separated</option>
+                    </select>
+                    <br>
+                    <input type="submit" value="Update">
+                </form>
+              </div>
+            </div>
+          </div>
+</body>
+</html>

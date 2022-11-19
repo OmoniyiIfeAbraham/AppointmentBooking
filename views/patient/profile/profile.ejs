@@ -127,7 +127,7 @@
     <img style="width: 200px; height: 200px; border-radius: 50%;" src="<%= person.profilePicture %>" alt="<%= person.firstname %> <%= person.lastname %>">
     <h3><%= person.title %> <%= person.firstname %> <%= person.lastname %></h3>
     <h5><%= person.email %></h5>
-    <a href="#fullProfile">View Full Profile</a>
+    <a href="/viewProfile/<%= person.uniqueID %>">View Full Profile</a>
     <% const birth = person.dob %>
     <% const yob = birth.slice(0, 4) %>
     <% const yobN = parseInt(yob, 10) %>

@@ -117,9 +117,6 @@
                 <h1>Update Profile</h1>
                 <p><%= msg %></p>
                 <form action="/view/info/<%= doctor.uniqueID %>" method="post" enctype="multipart/form-data">
-                    <!-- <label for="profilePicture">Profile Picture: </label>
-                    <input type="file" name="profilePicture" id="profilePicture">
-                    <br> -->
                     <label for="firstname">Firstname: </label>
                     <input type="text" name="firstname" id="firstname" value="<%= doctor.firstname %>" required>
                     <br>
