@@ -112,7 +112,12 @@ router.get('/otp', (req, res) => {
 router.post('/otp', async(req, res, next) => {
     const sess = req.session
     console.log(sess)
-    const OTP = req.body.otp
+    const one = req.body.a
+    const two = req.body.b
+    const three = req.body.c
+    const four = req.body.d
+    const OTP = `${one}${two}${three}${four}`
+    // const OTP = req.body.otp
     if (sess.email && sess.password) {
         try {
             const patientAuth = await authMod.findOne({ email: sess.email })

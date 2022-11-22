@@ -27,6 +27,8 @@ router.post('/', async(req, res) => {
                         console.log(sess)
                         res.redirect('/patient')
                     } else {
+                        sess.email = loginEmail
+                        sess.password = loginPassword
                         res.redirect('/patientRegister/otp')
                     }
                 } else {
