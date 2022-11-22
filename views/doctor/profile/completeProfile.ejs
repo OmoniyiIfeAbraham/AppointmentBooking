@@ -33,6 +33,22 @@
           height: 450px;
           text-align: center;
         }
+
+        @media screen and (max-width: 950px) {
+          .popup {
+            width: 50%
+          }
+        }
+        @media screen and (max-width: 600px) {
+          .popup {
+            width: 70%
+          }
+        }
+        @media screen and (max-width: 450px) {
+          .popup {
+            width: 90%
+          }
+        }
   
         .popup h2 {
           margin-top: 0;
@@ -72,7 +88,7 @@
   input[type="date"] {
   height: 35px;
   margin: 0 auto;
-  width: 260px;
+  width: 63%;
   font-family: arial, sans-serif;
   font-size: 18px;
   font-weight: bold;
@@ -123,7 +139,7 @@ input[type="date"]::-webkit-calendar-picker-indicator:active {
     border: 0;
     border-radius: 5px;
     padding: 14px 10px;
-    width: 320px;
+    width: 80%;
     outline: none;
     color: #d6d6d6;
     -webkit-transition: all 0.2s ease-out;
@@ -163,7 +179,7 @@ input[type="date"]::-webkit-calendar-picker-indicator:active {
 .select select {
   -webkit-appearance: none;
   padding: 7px 40px 7px 12px;
-  width: 340px;
+  width: 85%;
   margin-bottom: 20px;
   /* margin-left: 30px;
   margin-right: 50px; */
@@ -229,7 +245,7 @@ input[type="file"]::file-selector-button:hover {
     background: #7f5feb;
     color: #dfdeee;
     border-radius: 100px;
-    width: 340px;
+    width: 75%;
     height: 49px;
     font-size: 16px;
     position: absolute;
@@ -252,7 +268,7 @@ input[type="file"]::file-selector-button:hover {
           <a class="close" href="" style="color: white;">&times;</a>
           <div class="content">
            <form action="/completeProfile/<%= id %>" method="POST" enctype="multipart/form-data" class="box">
-            <h4>Complete<span>Profile</span></h4>
+            <h4>Complete <span>Profile</span></h4>
             <p style="color: red;"><%= msg %></p>
             <label for="dob" style="color: white; margin-left: 5px; font-size: small;">Date of Birth: </label>
             <input type="date" name="dob" id="dob" required>
