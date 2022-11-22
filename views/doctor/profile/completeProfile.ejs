@@ -25,11 +25,13 @@
         .popup {
           margin: 70px auto;
           padding: 20px;
-          background: #fff;
+          background: rgb(33, 41, 66);
           border-radius: 5px;
           width: 30%;
           position: relative;
           transition: all 5s ease-in-out;
+          height: 450px;
+          text-align: center;
         }
   
         .popup h2 {
@@ -51,27 +53,266 @@
           color: #06d85f;
         }
         .popup .content {
-          max-height: 30%;
+          max-height: 90%;
           overflow: auto;
         }
+
+        .box h4 {
+    font-family: "Source Sans Pro", sans-serif;
+    color: #5c6bc0;
+    font-size: 18px;
+    margin-top: 24px;
+  }
+  
+  .box h4 span {
+    color: #dfdeee;
+    font-weight: lighter;
+  }
+
+  input[type="date"] {
+  height: 35px;
+  margin: 0 auto;
+  width: 260px;
+  font-family: arial, sans-serif;
+  font-size: 18px;
+  font-weight: bold;
+  text-transform: uppercase;
+  background-color: rgb(38,46,73);
+  outline: none;
+  border: 0;
+  border-radius: 3px;
+  padding: 0 3px;
+  color: #fff;
+}
+input[type="date"]::-webkit-datetime-edit-month-field {
+  color: red;
+}
+input[type="date"]::-webkit-datetime-edit-day-field {
+  color: white;
+}
+input[type="date"]::-webkit-datetime-edit-year-field {
+  color: blue;
+}
+input[type="date"]::-webkit-clear-button {
+  font-size: 18px;
+  height: 30px;
+  position: relative;
+  right: 5px;
+  margin-right: 4px;
+}
+input[type="date"]::-webkit-inner-spin-button {
+  height: 30px;
+}
+input[type="date"]::-webkit-calendar-picker-indicator {
+  font-size: 18px;
+}
+input[type="date"]::-webkit-calendar-picker-indicator:hover {
+  background-color: #959595;
+  color: #e6e6e6;
+  cursor: pointer;
+}
+input[type="date"]::-webkit-calendar-picker-indicator:active {
+  color: blue;
+}
+
+  .box input[type="text"],
+  .box input[type="password"] {
+    display: block;
+    margin: 20px auto;
+    background: #262e49;
+    border: 0;
+    border-radius: 5px;
+    padding: 14px 10px;
+    width: 320px;
+    outline: none;
+    color: #d6d6d6;
+    -webkit-transition: all 0.2s ease-out;
+    -moz-transition: all 0.2s ease-out;
+    -ms-transition: all 0.2s ease-out;
+    -o-transition: all 0.2s ease-out;
+    transition: all 0.2s ease-out;
+  }
+  ::-webkit-input-placeholder {
+    color: #565f79;
+  }
+  
+  .box input[type="text"]:focus,
+  .box input[type="password"]:focus {
+    border: 1px solid #79a6fe;
+  }
+
+  .select {
+  position: relative;
+  min-width: 10px;
+  background-color: rgb(33, 41, 66);
+}
+
+.select svg {
+  position: absolute;
+  right: 12px;
+  top: calc(50% - 3px);
+  width: 10px;
+  height: 6px;
+  stroke-width: 2px;
+  stroke: #9098a9;
+  fill: none;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  pointer-events: none;
+}
+.select select {
+  -webkit-appearance: none;
+  padding: 7px 40px 7px 12px;
+  width: 340px;
+  margin-bottom: 20px;
+  /* margin-left: 30px;
+  margin-right: 50px; */
+  border: 1px solid rgb(33, 41, 66);
+  border-radius: 5px;
+  background: rgb(33, 41, 66);
+  box-shadow: 0 1px 3px -2px #9098a9;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 16px;
+  transition: all 150ms ease;
+}
+.select select:required:invalid {
+  color: #565f79;
+}
+.select select option {
+  color: #fff;
+}
+.select select option[value=""][disabled] {
+  display: none;
+}
+.select select:focus {
+  outline: none;
+  border-color: #07f;
+  box-shadow: 0 0 0 2px rgba(0,119,255,0.2);
+}
+.select select:hover + svg {
+  stroke: #07f;
+}
+.sprites {
+  position: absolute;
+  width: 0;
+  height: 0;
+  pointer-events: none;
+  user-select: none;
+}
+
+input[type="file"]::file-selector-button {
+  border: 2px solid #6c5ce7;
+  padding: 0.2em 0.4em;
+  border-radius: 0.2em;
+  background-color: #a29bfe;
+  transition: 1s;
+}
+
+input[type="file"]::-ms-browse:hover {
+  background-color: #81ecec;
+  border: 2px solid #00cec9;
+}
+
+input[type="file"]::-webkit-file-upload-button:hover {
+  background-color: #81ecec;
+  border: 2px solid #00cec9;
+}
+
+input[type="file"]::file-selector-button:hover {
+  background-color: #81ecec;
+  border: 2px solid #00cec9;
+}
+
+.btn1 {
+    border: 0;
+    background: #7f5feb;
+    color: #dfdeee;
+    border-radius: 100px;
+    width: 340px;
+    height: 49px;
+    font-size: 16px;
+    position: absolute;
+    top:79%;
+    left: 12%;
+    transition: 0.3s;
+    cursor: pointer;
+  }
+  
+  .btn1:hover {
+    background: #5d33e6;
+  }
       </style>
 </head>
 <body onload="All()">
-    <div id="<%= id %>" class="overlay">
-      <p><%= check %></p>
-      <p><%= msg %></p>
+    <div id="<%= id %>" class="overlay animated bounceInDown">
+      <!-- <p><%= check %></p> -->
+      <!-- <p><%= msg %></p> -->
         <div class="popup">
-          <h2>Complete Profile</h2>
-          <a class="close" href="">&times;</a>
+          <a class="close" href="" style="color: white;">&times;</a>
           <div class="content">
-           <form action="/completeProfile/<%= id %>" method="POST" enctype="multipart/form-data">
-            <label for="dob">Date of Birth: </label>
+           <form action="/completeProfile/<%= id %>" method="POST" enctype="multipart/form-data" class="box">
+            <h4>Complete<span>Profile</span></h4>
+            <p style="color: red;"><%= msg %></p>
+            <label for="dob" style="color: white; margin-left: 5px; font-size: small;">Date of Birth: </label>
             <input type="date" name="dob" id="dob" required>
             <br>
-            <label for="address">Current Address: </label>
+            <input type="text" name="address" id="address" required placeholder="Address">
+            <!-- <label for="address">Current Address: </label>
             <input type="text" name="address" id="address" required>
-            <br>
-            <label for="stateOfOrigin">State of Origin: </label>
+            <br> -->
+            <label class="select" for="slct">
+              <select id="slct" required="required" name="stateOfOrigin">
+                <option value="" disabled="disabled" selected="selected">--Select State--</option>
+                <option value="Abia">Abia</option>
+                <option value="Adamawa">Adamawa</option>
+                <option value="Akwa Ibom">Akwa Ibom</option>
+                <option value="Anambra">Anambra</option>
+                <option value="Bauchi">Bauchi</option>
+                <option value="Bayelsa">Bayelsa</option>
+                <option value="Benue">Benue</option>
+                <option value="Borno">Borno</option>
+                <option value="Cross River">Cross River</option>
+                <option value="Delta">Delta</option>
+                <option value="Ebonyi">Ebonyi</option>
+                <option value="Edo">Edo</option>
+                <option value="Ekiti">Ekiti</option>
+                <option value="Enugu">Enugu</option>
+                <option value="FCT">Federal Capital Territory</option>
+                <option value="Gombe">Gombe</option>
+                <option value="Imo">Imo</option>
+                <option value="Jigawa">Jigawa</option>
+                <option value="Kaduna">Kaduna</option>
+                <option value="Kano">Kano</option>
+                <option value="Katsina">Katsina</option>
+                <option value="Kebbi">Kebbi</option>
+                <option value="Kogi">Kogi</option>
+                <option value="Kwara">Kwara</option>
+                <option value="Lagos">Lagos</option>
+                <option value="Nasarawa">Nasarawa</option>
+                <option value="Niger">Niger</option>
+                <option value="Ogun">Ogun</option>
+                <option value="Ondo">Ondo</option>
+                <option value="Osun">Osun</option>
+                <option value="Oyo">Oyo</option>
+                <option value="Plateau">Plateau</option>
+                <option value="Rivers">Rivers</option>
+                <option value="Sokoto">Sokoto</option>
+                <option value="Taraba">Taraba</option>
+                <option value="Yobe">Yobe</option>
+                <option value="Zamfara">Zamfara</option>
+              </select>
+              <svg>
+                <use xlink:href="#select-arrow-down"></use>
+              </svg>
+            </label>
+            <!-- SVG Sprites-->
+            <svg class="sprites">
+              <symbol id="select-arrow-down" viewbox="0 0 10 6">
+                <polyline points="1 1 5 5 9 1"></polyline>
+              </symbol>
+            </svg>
+            <!-- <label for="stateOfOrigin">State of Origin: </label>
               <select name="stateOfOrigin" id="stateOfOrigin" required>
                 <option disabled selected>--Select State--</option>
                 <option value="Abia">Abia</option>
@@ -112,8 +353,26 @@
                 <option value="Yobe">Yobe</option>
                 <option value="Zamfara">Zamfara</option>
             </select>
-            <br>
-            <label for="maritalStatus">Marital Status: </label>
+            <br> -->
+            <label class="select" for="slct">
+              <select id="slct" required="required" name="maritalStatus">
+                <option value="" disabled="disabled" selected="selected">--Select Status--</option>
+                <option value="married">Married</option>
+                <option value="single">Single</option>
+                <option value="Divorced">Divorced</option>
+                <option value="seperated">Separated</option>
+              </select>
+              <svg>
+                <use xlink:href="#select-arrow-down"></use>
+              </svg>
+            </label>
+            <!-- SVG Sprites-->
+            <svg class="sprites">
+              <symbol id="select-arrow-down" viewbox="0 0 10 6">
+                <polyline points="1 1 5 5 9 1"></polyline>
+              </symbol>
+            </svg>
+            <!-- <label for="maritalStatus">Marital Status: </label>
             <select name="maritalStatus" id="maritalStatus" required>
               <option disabled selected>--Select Status--</option>
               <option value="married">Married</option>
@@ -121,11 +380,15 @@
               <option value="Divorced">Divorced</option>
               <option value="seperated">Separated</option>
             </select>
+            <br> -->
             <br>
-            <label for="permit">Doctors Permit: </label>
+            <label for="file" style="color: white; margin-left: 20px; font-size: small;">Doctors Permit:</label>
+            <input type="file" name="permit " id="permit " required>
+            <!-- <label for="permit">Doctors Permit: </label>
             <input type="file" name="permit" id="permit" required>
-            <br>
-            <input type="submit" value="Next">
+            <br> -->
+            <input type="submit" value="Next" class="btn1">
+            <!-- <input type="submit" value="Next"> -->
            </form>
           </div>
         </div>
