@@ -2,10 +2,17 @@ const express = require('express')
 
 const router = express.Router()
 
-router.get('/', (req, res) => {
+const doctorMod = require('./../../models/doctor/profile/profile')
+const patientMod = require('./../../models/patient/profile/profile')
+const scheduleMod = require('./../../models/doctor/schedule/schedule')
+
+router.get('/', async (req, res) => {
     const sess = req.session
     if (sess.email && sess.password && sess.identifier === 'admin') {
-        res.render('admin/home')
+        const doctors = await doctorMod.find()
+        const patients = await patientMod.find()
+        const schedules = await scheduleMod.find()
+        res.render('admin/home', { doctors, patients, schedules })
     } else {
         res.redirect('/adminLogin')
     }
