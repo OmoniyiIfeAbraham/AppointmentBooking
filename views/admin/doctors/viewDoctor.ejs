@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><%= info.firstname %> <%= info.lastname %> || Profile</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
     <style>
         .overlay {
           position: fixed;
@@ -54,91 +55,130 @@
           max-height: 30%;
           overflow: auto;
         }
+
+.profile-header {
+    transform: translateY(5rem);
+}
+
+
+body {
+    background: black;
+    background: -webkit-linear-gradient(to right, rgba(0, 0, 0, 0.8), rgb(101, 96, 96));
+    background: linear-gradient(to right, rgba(0, 0, 0, 0.8), rgb(101, 96, 96));
+    min-height: 100vh;
+}
       </style>
 </head>
 <body>
-    <p><%= msg %></p>
     <form action="/logout/admin">
       <input type="submit" value="LOGOUT">
     </form>
-    <center>
-        <img style="width: 300px; height: 300px; border-radius: 50%;" src="<%= info.profilePicture %>" alt="<%= info.firstname %> <%= info.lastname %>">
-        <br>
-        <h3>Dr. <%= info.firstname %> <%= info.lastname %></h3>
-        <h5><%= info.email %></h5>
-        <% if (info.permitApprove == true && info.identityApprove == true) { %>
-            <p><b>Status: </b>Approved</p>
-        <% } else { %>
-            <p><b>Status: </b>Pending</p>
-        <% } %>
-        <a href="#fullProfile">View Full Profile</a>
-        <br>
-        <div style="display: flex; width: 100%; height: 500px; justify-content: space-around;">
-            <div style="display: flex; flex-direction: column; height: 450px; width: 40%;">
-              <% const ext = info.permit.slice(-4) %>
-              <% if (ext == '.jpg' || ext == '.png' || ext == 'jpeg') { %>
-                <img style="width: 100%; height: 100%; border-radius: 10%; margin-bottom: 10px;" src="<%= info.permit %>" alt="<%= info.firstname %> <%= info.lastname %>">
-              <% } else if (ext == '.pdf' || ext == '.doc' || ext == '.ppt' || ext == 'docx') { %>
-                <a href="<%= info.permit %>"><img style="width: 100%; height: 100%; border-radius: 10%; margin-bottom: 10px;" src="/images/static_img.png" alt="<%= info.firstname %> <%= info.lastname %>"></a>
+    <form action="/home">
+      <input type="submit" value="DASHBOARD">
+    </form>
+<div class="row py-5 px-4">
+  <div class="col-xl-4 col-md-6 col-sm-10 mx-auto">
+
+      <!-- Profile widget -->
+      <div class="bg-white shadow rounded overflow-hidden">
+          <div class="px-4 pt-0 pb-4 bg-dark">
+              <div class="media align-items-end profile-header">
+                  <div class="profile mr-3"><a href="<%= info.profilePicture %>" target="_blank"><img src="<%= info.profilePicture %>" alt="<%= info.firstname %> <%= info.lastname %>" width="130" class="rounded mb-2 img-thumbnail"></a><a href="#fullProfile" class="btn btn-dark btn-sm btn-block">View Full Profile</a></div>
+                  <div class="media-body mb-5 text-white">
+                      <h4 class="mt-0 mb-0"><%= info.firstname %> <%= info.lastname %></h4>
+                      <p class="small mb-4"> <i class="fa fa-map-marker mr-2"></i><a href="mailto: <%= info.email %>"><%= info.email %></a></p>
+                  </div>
+              </div>
+          </div>
+
+          <div class="bg-light p-4 d-flex justify-content-end text-center">
+              <ul class="list-inline mb-0">
+                <% if (info.permitApprove == true && info.identityApprove == true) { %>
+                  <p><b>Status: </b>Approved</p>
+              <% } else { %>
+                  <p><b>Status: </b>Pending</p>
               <% } %>
-                <% if (info.permitApprove == false) { %>
-                  <form action="/approve/permit/<%= info._id %>">
-                    <input type="submit" value="Approve Permit">
-                  </form>
-                <% } else { %>
-                  <h3>CONFIRMED</h3>
+              </ul>
+          </div>
+
+          <div class="py-4 px-4">
+              <div class="d-flex align-items-center justify-content-between mb-3">
+                <p><%= msg %></p>
+                  <h5 class="mb-0">Vital Documents</h5>
+              </div>
+              <div class="row">
+                <% const ext = info.permit.slice(-4) %>
+                <% if (ext == '.jpg' || ext == '.png' || ext == 'jpeg') { %>
+                  <div class="col-lg-12 mb-2 pr-lg-1"><a href="<%= info.permit %>" target="_blank"><img src="<%= info.permit %>" alt="<%= info.firstname %> <%= info.lastname %>" class="img-fluid rounded shadow-sm"></a></div>
+                  <!-- <img style="width: 100%; height: 100%; border-radius: 10%; margin-bottom: 10px;" src="<%= info.permit %>" alt="<%= info.firstname %> <%= info.lastname %>"> -->
+                <% } else if (ext == '.pdf' || ext == '.doc' || ext == '.ppt' || ext == 'docx') { %>
+                  <div class="col-lg-6 mb-2 pr-lg-1"><a href="<%= info.permit %>" target="_blank"><img src="/images/static_img.png" alt="<%= info.firstname %> <%= info.lastname %>" class="img-fluid rounded shadow-sm"></a></div>
+                  <!-- <a href="<%= info.permit %>"><img style="width: 100%; height: 100%; border-radius: 10%; margin-bottom: 10px;" src="/images/static_img.png" alt="<%= info.firstname %> <%= info.lastname %>"></a> -->
                 <% } %>
-            </div>
-            <div style="display: flex; flex-direction: column; height: 450px; width: 40%;">
-              <% if (ext == '.jpg' || ext == '.png' || ext == 'jpeg') { %>
-                <img style="width: 100%; height: 100%; border-radius: 10%; margin-bottom: 10px;" src="<%= info.identity %>" alt="<%= info.firstname %> <%= info.lastname %>">
-              <% } else if (ext == '.pdf' || ext == '.doc' || ext == '.ppt' || ext == 'docx') { %>
-                <a href="<%= info.identity %>"> <img style="width: 100%; height: 100%; border-radius: 10%; margin-bottom: 10px;" src="/images/static_img.png" alt="<%= info.firstname %> <%= info.lastname %>"></a>
-              <% } %>
-                <% if (info.identityApprove == false) { %>
-                  <form action="/approve/identity/<%= info._id %>">
-                    <input type="submit" value="Approve Identity">
-                </form>
-                <% } else { %>
-                  <h3>CONFIRMED</h3>
-                <% } %>
-            </div>
-        </div>
-        <% if (info.permitApprove == true && info.identityApprove == true) { %>
-          <form action="/approve/revoke/<%= info._id %>">
-            <input type="submit" value="Revoke Approvals">
-          </form>
-        <% } else { %>
-          <form action="/approve/decline/<%= info._id %>">
-            <input type="submit" value="Decline All Documents">
-          </form>
-        <% } %>
-    </center>
-    <% const birth = info.dob %>
-    <% const yob = birth.slice(0, 4) %>
-    <% const yobN = parseInt(yob, 10) %>
-    <% const date = new Date() %>
-    <% const realDate = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDay() %>
-    <% const realYear = realDate.slice(0, 4) %>
-    <% const now = parseInt(realYear, 10) %>
-    <% const age = now - yobN %>
-    <center>
-        <div id="fullProfile" class="overlay">
-            <div class="popup">
-              <h2>Dr. <%= info.title %> <%= info.firstname %> <%= info.lastname %></h2>
-              <a class="close" href="">&times;</a>
-              <div class="content">
-                <img style="width: 200px; height: 200px; border-radius: 50%;" src="<%= info.profilePicture %>" alt="<%= info.firstname %> <%= info.lastname %>">
-                <br>
-                <p><b>Email:</b> <%= info.email %></p>
-                <p><b>Gender:</b> <%= info.gender %></p>
-                <p><b>Age:</b> <%= age %></p>
-                <p><b>Address:</b> <%= info.address %></p>
-                <p><b>State Of Origin:</b> <%= info.stateOfOrigin %></p>
-                <p><b>Marital Status:</b> <%= info.maritalStatus %></p>
+                  <% if (info.permitApprove == false) { %>
+                    <!-- <form action="/approve/permit/<%= info._id %>">
+                      <input type="submit" value="Approve Permit">
+                    </form> -->
+                    <a href="/approve/permit/<%= info._id %>" class="btn btn-dark btn-sm btn-block">Approve Permit</a>
+                  <% } else { %>
+                    <h3>CONFIRMED</h3>
+                  <% } %>
+                  <!--  -->
+                  <% if (ext == '.jpg' || ext == '.png' || ext == 'jpeg') { %>
+                    <div class="col-lg-12 mb-2 mt-2 pl-lg-1"><a href="<%= info.identity %>" target="_blank"><img src="<%= info.identity %>" alt="<%= info.firstname %> <%= info.lastname %>" class="img-fluid rounded shadow-sm"></a></div>
+                    <!-- <img style="width: 100%; height: 100%; border-radius: 10%; margin-bottom: 10px;" src="<%= info.identity %>" alt="<%= info.firstname %> <%= info.lastname %>"> -->
+                  <% } else if (ext == '.pdf' || ext == '.doc' || ext == '.ppt' || ext == 'docx') { %>
+                    <div class="col-lg-12 mb-2 mt-2 pl-lg-1"><a href="<%= info.identity %>" target="_blank"><img src="<%= info.identity %>" alt="<%= info.firstname %> <%= info.lastname %>" class="img-fluid rounded shadow-sm"></a></div>
+                    <!-- <a href="<%= info.identity %>"> <img style="width: 100%; height: 100%; border-radius: 10%; margin-bottom: 10px;" src="/images/static_img.png" alt="<%= info.firstname %> <%= info.lastname %>"></a> -->
+                  <% } %>
+                    <% if (info.identityApprove == false) { %>
+                    <a href="/approve/identity/<%= info._id %>" class="btn btn-dark btn-sm btn-block">Approve Identity</a>
+                    <% } else { %>
+                      <h3>CONFIRMED</h3>
+                    <% } %>
+              </div>
+
+              
+          </div>
+      </div><!-- End profile widget -->
+      <!--  -->
+      <% const birth = info.dob %>
+      <% const yob = birth.slice(0, 4) %>
+      <% const yobN = parseInt(yob, 10) %>
+      <% const date = new Date() %>
+      <% const realDate = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDay() %>
+      <% const realYear = realDate.slice(0, 4) %>
+      <% const now = parseInt(realYear, 10) %>
+      <% const age = now - yobN %>
+      <center>
+          <div id="fullProfile" class="overlay">
+              <div class="popup">
+                <h2>Dr. <%= info.title %> <%= info.firstname %> <%= info.lastname %></h2>
+                <a class="close" href="">&times;</a>
+                <div class="content">
+                  <a href="<%= info.profilePicture %>" target="_blank"><img style="width: 200px; height: 200px; border-radius: 50%;" src="<%= info.profilePicture %>" alt="<%= info.firstname %> <%= info.lastname %>"></a>
+                  <br>
+                  <p><b>Email:</b> <a style="color: black;" href="mailto: <%= info.email %>"><%= info.email %></a></p>
+                  <p><b>Gender:</b> <%= info.gender %></p>
+                  <p><b>Age:</b> <%= age %></p>
+                  <p><b>Address:</b> <%= info.address %></p>
+                  <p><b>State Of Origin:</b> <%= info.stateOfOrigin %></p>
+                  <p><b>Marital Status:</b> <%= info.maritalStatus %></p>
+                </div>
               </div>
             </div>
-          </div>
-    </center>
+      </center>
+      <!--  -->
+  </div>
+</div>
+
+<!-- jQuery library -->
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.slim.min.js"></script>
+
+<!-- Popper JS -->
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+
+<!-- Latest compiled JavaScript -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
