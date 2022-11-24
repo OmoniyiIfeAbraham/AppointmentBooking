@@ -367,9 +367,9 @@
                                           <h2>Dr. <%= doctor.title %> <%= doctor.firstname %> <%= doctor.lastname %></h2>
                                           <a class="close" href="">&times;</a>
                                           <div class="content">
-                                            <img style="width: 200px; height: 200px; border-radius: 50%;" src="<%= doctor.profilePicture %>" alt="<%= doctor.firstname %> <%= doctor.lastname %>">
+                                            <a href="<%= doctor.profilePicture %>" target="_blank"><img style="width: 200px; height: 200px; border-radius: 50%;" src="<%= doctor.profilePicture %>" alt="<%= doctor.firstname %> <%= doctor.lastname %>"></a>
                                             <br>
-                                            <p><b>Email:</b> <%= doctor.email %></p>
+                                            <p><b>Email:</b> <a href="mailto: <%= doctor.email %>" style="color: black;"><%= doctor.email %></a></p>
                                             <p><b>Gender:</b> <%= doctor.gender %></p>
                                             <p><b>Age:</b> <%= age %></p>
                                             <p><b>Address:</b> <%= doctor.address %></p>
