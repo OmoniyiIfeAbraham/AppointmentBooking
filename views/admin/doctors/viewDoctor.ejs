@@ -70,12 +70,14 @@ body {
       </style>
 </head>
 <body>
-    <form action="/logout/admin">
-      <input type="submit" value="LOGOUT">
-    </form>
-    <form action="/home">
-      <input type="submit" value="DASHBOARD">
-    </form>
+
+  <form action="/logout/admin">
+    <input type="submit" value="LOGOUT">
+  </form>
+  <form action="/home">
+    <input type="submit" value="DASHBOARD">
+  </form>
+
 <div class="row py-5 px-4">
   <div class="col-xl-4 col-md-6 col-sm-10 mx-auto">
 
@@ -86,7 +88,7 @@ body {
                   <div class="profile mr-3"><a href="<%= info.profilePicture %>" target="_blank"><img src="<%= info.profilePicture %>" alt="<%= info.firstname %> <%= info.lastname %>" width="130" class="rounded mb-2 img-thumbnail"></a><a href="#fullProfile" class="btn btn-dark btn-sm btn-block">View Full Profile</a></div>
                   <div class="media-body mb-5 text-white">
                       <h4 class="mt-0 mb-0"><%= info.firstname %> <%= info.lastname %></h4>
-                      <p class="small mb-4"> <i class="fa fa-map-marker mr-2"></i><a href="mailto: <%= info.email %>"><%= info.email %></a></p>
+                      <p class="small mb-4"> <i class="fa fa-map-marker mr-2"></i><%= info.email %></p>
                   </div>
               </div>
           </div>
@@ -116,9 +118,6 @@ body {
                   <!-- <a href="<%= info.permit %>"><img style="width: 100%; height: 100%; border-radius: 10%; margin-bottom: 10px;" src="/images/static_img.png" alt="<%= info.firstname %> <%= info.lastname %>"></a> -->
                 <% } %>
                   <% if (info.permitApprove == false) { %>
-                    <!-- <form action="/approve/permit/<%= info._id %>">
-                      <input type="submit" value="Approve Permit">
-                    </form> -->
                     <a href="/approve/permit/<%= info._id %>" class="btn btn-dark btn-sm btn-block">Approve Permit</a>
                   <% } else { %>
                     <h3>CONFIRMED</h3>
@@ -132,9 +131,18 @@ body {
                     <!-- <a href="<%= info.identity %>"> <img style="width: 100%; height: 100%; border-radius: 10%; margin-bottom: 10px;" src="/images/static_img.png" alt="<%= info.firstname %> <%= info.lastname %>"></a> -->
                   <% } %>
                     <% if (info.identityApprove == false) { %>
+                      <!-- <form action="/approve/identity/<%= info._id %>">
+                        <input type="submit" value="Approve Identity">
+                    </form> -->
                     <a href="/approve/identity/<%= info._id %>" class="btn btn-dark btn-sm btn-block">Approve Identity</a>
                     <% } else { %>
                       <h3>CONFIRMED</h3>
+                    <% } %>
+
+                     <% if (info.permitApprove == true && info.identityApprove == true) { %>
+                      <a href="/approve/revoke/<%= info._id %>" class="btn btn-dark btn-sm btn-block">Revoke Approvals</a>
+                    <% } else { %>
+                      <a href="/approve/decline/<%= info._id %>" class="btn btn-dark btn-sm btn-block">Decline All Documents</a>
                     <% } %>
               </div>
 
@@ -158,7 +166,7 @@ body {
                 <div class="content">
                   <a href="<%= info.profilePicture %>" target="_blank"><img style="width: 200px; height: 200px; border-radius: 50%;" src="<%= info.profilePicture %>" alt="<%= info.firstname %> <%= info.lastname %>"></a>
                   <br>
-                  <p><b>Email:</b> <a style="color: black;" href="mailto: <%= info.email %>"><%= info.email %></a></p>
+                  <p><b>Email:</b> <a href="mailto: <%= info.email %>" style="color: black;"><%= info.email %></a></p>
                   <p><b>Gender:</b> <%= info.gender %></p>
                   <p><b>Age:</b> <%= age %></p>
                   <p><b>Address:</b> <%= info.address %></p>

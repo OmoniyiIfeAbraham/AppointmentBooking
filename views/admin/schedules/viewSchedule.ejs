@@ -5,6 +5,14 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Schedule</title>
+      <!--     Fonts and icons     -->
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700,200" rel="stylesheet" />
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
+  <!-- CSS Files -->
+  <link href="../assets/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="../assets/css/paper-dashboard.css?v=2.0.1" rel="stylesheet" />
+  <!-- CSS Just for demo purpose, don't include it in your project -->
+  <link href="../assets/demo/demo.css" rel="stylesheet" />
     <style>
       .overlay {
         position: fixed;
@@ -54,11 +62,17 @@
         max-height: 30%;
         overflow: auto;
       }
+      body{
+        background-color: rgba(0, 0, 0, 0.5);
+      }
     </style>
 </head>
 <body>
   <form action="/logout/admin">
     <input type="submit" value="LOGOUT">
+  </form>
+  <form action="/home">
+    <input type="submit" value="DASHBOARD">
   </form>
     <% const start = new Date(schedule.start).toLocaleString() %>
     <% const end = new Date(schedule.end).toLocaleString() %>
@@ -77,70 +91,110 @@
             <h4>Status: <i>Live</i></h4>
           <% } %>
           <br>
-          <h1>Bookings</h1>
-          <table>
-            <tr>
-              <th>Patient</th>
-              <th>Booked Start Time/Date</th>
-              <th>Booked End Time/Date</th>
-              <th>Remarks</th>
-            </tr>
-            <tr>
-              <% if (bookings.length > 0) { %>
-                <% bookings.forEach(booking => { %>
-                  <% const startEvent = new Date(booking.start) %>
-                  <% const startTime = startEvent.toLocaleTimeString('en-US') %>
-                  <% const endEvent = new Date(booking.end) %>
-                  <% const endTime = endEvent.toLocaleTimeString('en-US') %>
-                  <tr>
-                    <% patients.forEach(patient => { %>
-                      <% const birth = patient.dob %>
-                      <% const yob = birth.slice(0, 4) %>
-                      <% const yobN = parseInt(yob, 10) %>
-                      <% const date = new Date() %>
-                      <% const realDate = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDay() %>
-                      <% const realYear = realDate.slice(0, 4) %>
-                      <% const now = parseInt(realYear, 10) %>
-                      <% const age = now - yobN %>
-                      <% if (patient._id == booking.patientID) { %>
-                        <td><a href="#fullProfile/<%= patient._id %>"><%= patient.firstname %> <%= patient.lastname %></a></td>
-                        <center>
-                          <div id="fullProfile/<%= patient._id %>" class="overlay">
-                              <div class="popup">
-                                <h2><%= patient.title %> <%= patient.firstname %> <%= patient.lastname %></h2>
-                                <a class="close" href="">&times;</a>
-                                <div class="content">
-                                  <img style="width: 200px; height: 200px; border-radius: 50%;" src="<%= patient.profilePicture %>" alt="<%= patient.firstname %> <%= patient.lastname %>">
-                                  <br>
-                                  <p><b>Email:</b> <%= patient.email %></p>
-                                  <p><b>Gender:</b> <%= patient.gender %></p>
-                                  <p><b>Age:</b> <%= age %></p>
-                                  <p><b>Address:</b> <%= patient.address %></p>
-                                  <p><b>State Of Origin:</b> <%= patient.stateOfOrigin %></p>
-                                  <p><b>Marital Status:</b> <%= patient.maritalStatus %></p>
-                                </div>
-                              </div>
-                            </div>
-                      </center>
-                      <% } else { %>
-
-                      <% } %>
-                    <% }) %>
-                    <td><%= startEvent.toLocaleString() %></td>
-                    <td><%= endEvent.toLocaleString() %></td>
-                    <td>Remarks</td>
-                  </tr>
-                <% }) %>
-              <% } else { %>
-                <tr>
-                  <td>----</td>
-                  <td>----</td>
-                  <td>----</td>
-                  <td>----</td>
-                </tr>
-              <% } %>
-            </tr>
-          </table>
     </center>
+
+    <div class="content">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card">
+            <div class="card-header">
+              <h4 class="card-title">Bookings</h4>
+            </div>
+            <div class="card-body">
+              <div class="table-responsive">
+                <table class="table">
+                  <thead class=" text-primary">
+                    <th>
+                      Patient
+                    </th>
+                    <th>
+                      Booked Start Time/Date
+                    </th>
+                    <th>
+                      Booked End Time/Date
+                    </th>
+                    <th class="text-right">
+                      Remarks
+                    </th>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <% if (bookings.length > 0) { %>
+                        <% bookings.forEach(booking => { %>
+                          <% const startEvent = new Date(booking.start) %>
+                          <% const startTime = startEvent.toLocaleTimeString('en-US') %>
+                          <% const endEvent = new Date(booking.end) %>
+                          <% const endTime = endEvent.toLocaleTimeString('en-US') %>
+                          <tr>
+                            <% patients.forEach(patient => { %>
+                              <% const birth = patient.dob %>
+                              <% const yob = birth.slice(0, 4) %>
+                              <% const yobN = parseInt(yob, 10) %>
+                              <% const date = new Date() %>
+                              <% const realDate = date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDay() %>
+                              <% const realYear = realDate.slice(0, 4) %>
+                              <% const now = parseInt(realYear, 10) %>
+                              <% const age = now - yobN %>
+                              <% if (patient._id == booking.patientID) { %>
+                                <td><a href="#fullProfile/<%= patient._id %>"><%= patient.firstname %> <%= patient.lastname %></a></td>
+                                <center>
+                                  <div id="fullProfile/<%= patient._id %>" class="overlay">
+                                      <div class="popup">
+                                        <h2><%= patient.title %> <%= patient.firstname %> <%= patient.lastname %></h2>
+                                        <a class="close" href="">&times;</a>
+                                        <div class="content">
+                                          <a href="<%= patient.profilePicture %>" target="_blank"><img style="width: 200px; height: 200px; border-radius: 50%;" src="<%= patient.profilePicture %>" alt="<%= patient.firstname %> <%= patient.lastname %>"></a>
+                                          <br>
+                                          <p><b>Email:</b> <a href="mailto: <%= patient.email %>" style="color: black;"><%= patient.email %></a></p>
+                                          <p><b>Gender:</b> <%= patient.gender %></p>
+                                          <p><b>Age:</b> <%= age %></p>
+                                          <p><b>Address:</b> <%= patient.address %></p>
+                                          <p><b>State Of Origin:</b> <%= patient.stateOfOrigin %></p>
+                                          <p><b>Marital Status:</b> <%= patient.maritalStatus %></p>
+                                        </div>
+                                      </div>
+                                    </div>
+                              </center>
+                              <% } else { %>
+        
+                              <% } %>
+                            <% }) %>
+                            <td><%= startEvent.toLocaleString() %></td>
+                            <td><%= endEvent.toLocaleString() %></td>
+                            <td>Remarks</td>
+                          </tr>
+                        <% }) %>
+                      <% } else { %>
+                        <tr>
+                          <td>----</td>
+                          <td>----</td>
+                          <td>----</td>
+                          <td class="text-right">----</td>
+                        </tr>
+                      <% } %>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+      <!--   Core JS Files   -->
+  <script src="../assets/js/core/jquery.min.js"></script>
+  <script src="../assets/js/core/popper.min.js"></script>
+  <script src="../assets/js/core/bootstrap.min.js"></script>
+  <script src="../assets/js/plugins/perfect-scrollbar.jquery.min.js"></script>
+  <!--  Google Maps Plugin    -->
+  <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY_HERE"></script>
+  <!-- Chart JS -->
+  <script src="../assets/js/plugins/chartjs.min.js"></script>
+  <!--  Notifications Plugin    -->
+  <script src="../assets/js/plugins/bootstrap-notify.js"></script>
+  <!-- Control Center for Now Ui Dashboard: parallax effects, scripts for the example pages etc -->
+  <script src="../assets/js/paper-dashboard.min.js?v=2.0.1" type="text/javascript"></script><!-- Paper Dashboard DEMO methods, don't include it in your project! -->
+  <script src="../assets/demo/demo.js"></script>
 </body>
 </html>
