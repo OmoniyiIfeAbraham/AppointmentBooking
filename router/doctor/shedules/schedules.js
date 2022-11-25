@@ -5,6 +5,8 @@ const check = require('node-schedule')
 
 const scheduleMod = require('./../../../models/doctor/schedule/schedule')
 const bookingMod = require('./../../../models/patient/bookings/bookings')
+const registerMod = require('./../../../models/doctor/auth/register')
+const doctorMod = require('./../../../models/doctor/profile/profile')
 
 router.get('/:id', async(req, res, next) => {
     const sess = req.session
@@ -65,7 +67,10 @@ router.get('/:id', async(req, res, next) => {
         // check.scheduleJob('*/2 * * * * *', () => {
         //     console.log('I ran')
         // })
-        res.render('doctor/schedules/schedules', { msg: '', id: req.params.id, schedules })
+        const profile = await registerMod.findOne({ email: sess.email })
+        const person = await doctorMod.findOne({ uniqueID: profile._id })
+        const you  = await doctorMod.findOne({ email: sess.email })
+        res.render('doctor/schedules/schedules', { msg: '', id: req.params.id, schedules, unique: profile._id, you, ids: person._id })
     } else {
         res.redirect('/doctorLogin')
     }
