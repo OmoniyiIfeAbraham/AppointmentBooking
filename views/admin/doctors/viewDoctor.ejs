@@ -88,7 +88,7 @@ body {
                   <div class="profile mr-3"><a href="<%= info.profilePicture %>" target="_blank"><img src="<%= info.profilePicture %>" alt="<%= info.firstname %> <%= info.lastname %>" width="130" class="rounded mb-2 img-thumbnail"></a><a href="#fullProfile" class="btn btn-dark btn-sm btn-block">View Full Profile</a></div>
                   <div class="media-body mb-5 text-white">
                       <h4 class="mt-0 mb-0"><%= info.firstname %> <%= info.lastname %></h4>
-                      <p class="small mb-4"> <i class="fa fa-map-marker mr-2"></i><%= info.email %></p>
+                      <p class="small mb-4"> <i class="fa fa-map-marker mr-2"></i><a href="mailto: <%= info.email %>"><%= info.email %></a></p>
                   </div>
               </div>
           </div>
