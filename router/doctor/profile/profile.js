@@ -3,6 +3,8 @@ const router = express.Router()
 
 const registerMod = require('./../../../models/doctor/auth/register')
 const profileMod = require('./../../../models/doctor/profile/profile')
+const patientMod = require('./../../../models/patient/profile/profile')
+const scheduleMod = require('./../../../models/doctor/schedule/schedule')
 
 router.get('/', async(req, res) => {
     const sess = req.session
@@ -17,7 +19,10 @@ router.get('/', async(req, res) => {
                 const id = profile._id
                 res.render('doctor/profile/completeProfile', { id, check: false, msg: '' })
             } else if (you.permitApprove == true && you.identityApprove == true) {
-                res.render('doctor/profile/profile', { id: person._id, unique: profile._id })
+                const patients = await patientMod.find()
+                const schedules = await scheduleMod.find({ doctor: you._id })
+                console.log(schedules)
+                res.render('doctor/profile/profile', { id: person._id, unique: profile._id, you, patients, schedules })
             } else {
                 res.render('doctor/profile/waiting')
             }
