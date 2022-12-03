@@ -73,7 +73,7 @@ router.post('/d/:sender/:receiver/:id', async(req, res, next) => {
         } catch (err) {
             console.log(err)
             next(err)
-            res.render('doctor/schedules/viewSchedule', { schedule, bookings, patients, remarks, msg: `${err.message}` })
+            res.render('doctor/schedules/viewSchedule', { schedule, bookings, patients, remarks, msg: 'An Error Occured!!!' })
         }
     } else {
         res.redirect('/doctorLogin')

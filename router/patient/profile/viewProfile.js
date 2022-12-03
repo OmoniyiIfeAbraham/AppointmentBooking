@@ -51,7 +51,7 @@ router.post('/profilePic/:uniqueID', async (req, res, next) => {
             }
         } catch (err) {
             console.log(err)
-            res.render('patient/profile/viewProfile', { patient, msg: `${err.message}` })
+            res.render('patient/profile/viewProfile', { patient, msg: 'An Error Occured!!!' })
         }
     } else {
         res.redirect('/patientLogin')
@@ -96,7 +96,7 @@ router.post('/info/:uniqueID', async (req, res, next) => {
             }
         } catch (err) {
             console.log(err)
-            res.render('patient/profile/viewProfile', { patient, msg: `${err.message}` })
+            res.render('patient/profile/viewProfile', { patient, msg: 'An Error Occured!!!' })
         }
     } else {
         res.redirect('/patientLogin')

@@ -44,13 +44,13 @@ router.get('/permit/:id', async(req, res, next) => {
                         }
                         await systemMail.sendMail(mailOption)
                     }
-                    mail()
+                    // mail()
                     res.redirect('/doctors')
                 }
             })
         } catch(err) {
             console.log(err)
-            res.render('admin/doctors/viewDoctor', { msg: `${err.message}` })
+            res.render('admin/doctors/viewDoctor', { msg: 'An Error Occured!!!' })
         }
     } else {
         res.redirect('/adminLogin')
@@ -83,13 +83,13 @@ router.get('/identity/:id', async(req, res, next) => {
                         }
                         await systemMail.sendMail(mailOption)
                     }
-                    mail()
+                    // mail()
                     res.redirect('/doctors')
                 }
             })
         } catch(err) {
             console.log(err)
-            res.render('admin/doctors/viewDoctor', { msg: `${err.message}` })
+            res.render('admin/doctors/viewDoctor', { msg: 'An Error Occured!!!' })
         }
     } else {
         res.redirect('/adminLogin')
@@ -122,13 +122,13 @@ router.get('/revoke/:id', async(req, res, next) => {
                         }
                         await systemMail.sendMail(mailOption)
                     }
-                    mail()
+                    // mail()
                     res.redirect('/doctors')
                 }
             })
         } catch(err) {
             console.log(err)
-            res.render('admin/doctors/viewDoctor', { msg: `${err.message}` })
+            res.render('admin/doctors/viewDoctor', { msg: 'An Error Occured!!!' })
         }
     } else {
         res.redirect('/adminLogin')
@@ -187,7 +187,7 @@ router.get('/decline/:id', async(req, res, next) => {
                                         }
                                         await systemMail.sendMail(mailOption)
                                     }
-                                    mail()
+                                    // mail()
                                     res.redirect('/doctors')
                                 }
                             })
@@ -197,7 +197,7 @@ router.get('/decline/:id', async(req, res, next) => {
             })
         } catch(err) {
             console.log(err)
-            res.render('admin/doctors/viewDoctor', { msg: `${err.message}` })
+            res.render('admin/doctors/viewDoctor', { msg: 'An Error Occured!!!' })
         }
     } else {
         res.redirect('/adminLogin')

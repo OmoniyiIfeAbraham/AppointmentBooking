@@ -71,7 +71,7 @@ router.get('/:id', async(req, res, next) => {
                                         }
                                         await systemMail.sendMail(mailOption)
                                     }
-                                    mail()
+                                    // mail()
                                     res.redirect('/doctors')
                                 }
                             })
@@ -81,7 +81,7 @@ router.get('/:id', async(req, res, next) => {
             })
         } catch(err) {
             console.log(err)
-            res.render('admin/doctors/doctors', { msg: `${err.message}` })
+            res.render('admin/doctors/doctors', { msg: 'An Error Occured!!!' })
         }
     } else {
         res.redirect('/adminLogin')

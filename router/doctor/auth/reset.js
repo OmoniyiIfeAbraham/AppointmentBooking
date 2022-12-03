@@ -53,18 +53,18 @@ router.post('/', async(req, res) => {
                     sess.password = req.body.password
                     sess.name = savePerson._id
                     sess.find = person.uniqueID
-                    const mailOption={
-                        from: `${process.env.adminName} ${process.env.email}`,
-                        to: Email,
-                        subject: `${verifyMail.firstname} ${verifyMail.lastname} RESET OTP`,
-                        html: `
-                            <body>
-                                <center><h3>Hello ${verifyMail.firstname} ${verifyMail.lastname} your RESET OTP is...</h3></center>
-                                <center><h1>${random}</h1></center>
-                            </body>
-                        `
-                    }
-                    await systemMail.sendMail(mailOption)
+                    // const mailOption={
+                    //     from: `${process.env.adminName} ${process.env.email}`,
+                    //     to: Email,
+                    //     subject: `${verifyMail.firstname} ${verifyMail.lastname} RESET OTP`,
+                    //     html: `
+                    //         <body>
+                    //             <center><h3>Hello ${verifyMail.firstname} ${verifyMail.lastname} your RESET OTP is...</h3></center>
+                    //             <center><h1>${random}</h1></center>
+                    //         </body>
+                    //     `
+                    // }
+                    // await systemMail.sendMail(mailOption)
                     res.redirect('/resetPassword/otp')
                 } else {
                     res.render('doctor/auth/reset', { msg: 'There is no registered User with this Email Address' })
@@ -77,7 +77,7 @@ router.post('/', async(req, res) => {
         }
     } catch (err) {
         console.log(err)
-        res.render('doctor/auth/reset', { msg: `${err.message}` })
+        res.render('doctor/auth/reset', { msg: 'An Error Occured!!!' })
     }
 })
 
@@ -94,7 +94,11 @@ router.get('/otp', (req, res) => {
 router.post('/otp', async(req, res, next) => {
     const sess = req.session
     console.log(sess)
-    const OTP = req.body.otp
+    const one = req.body.a
+    const two = req.body.b
+    const three = req.body.c
+    const four = req.body.d
+    const OTP = `${one}${two}${three}${four}`
     if (sess.email && sess.password && sess.name) {
         try {
             const personAuth = await resetMod.findOne({ email: sess.email, uniqueID: sess.find })
@@ -147,7 +151,7 @@ router.post('/otp', async(req, res, next) => {
             }
         } catch (err) {
             console.log(err)
-            res.render('doctor/auth/resetOtp', { msg: `${err.message}`})
+            res.render('doctor/auth/resetOtp', { msg: 'An Error Occured!!!'})
         }
     } else {
         res.redirect('/home')

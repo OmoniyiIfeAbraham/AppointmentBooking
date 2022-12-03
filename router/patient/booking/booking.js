@@ -73,7 +73,7 @@ router.post('/:SID/:DID/:PID', async(req, res, next) => {
             }
         } catch (err) {
             console.log(err)
-            res.render('patient/profile/profile', { msg: `${err.message}`, person, schedules, doctors, bookings, info })
+            res.render('patient/profile/profile', { msg: 'An Error Occured!!!', person, schedules, doctors, bookings, info })
         }
     } else {
         res.redirect('/patientLogin')

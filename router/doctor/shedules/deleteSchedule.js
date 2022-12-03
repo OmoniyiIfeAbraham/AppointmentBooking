@@ -31,7 +31,7 @@ router.get('/:bam/:id', async(req, res, next) => {
             })
         } catch(err) {
             console.log(err)
-            res.render('doctor/schedules/schedules', { msg: `${err.message}` , bam, schedules })
+            res.render('doctor/schedules/schedules', { msg: 'An Error Occured!!!' , bam, schedules })
         }
     } else {
         res.redirect('/doctorLogin')

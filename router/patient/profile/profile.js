@@ -109,7 +109,7 @@ router.get('/', async(req, res) => {
             }
         } catch(err) {
             console.log(err)
-            res.render('patient/auth/login', { msg: `${err.message}`})
+            res.render('patient/auth/login', { msg: 'An Error Occured!!!'})
         }
         // res.render('patient/profile/profile')
     } else {

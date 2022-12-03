@@ -53,7 +53,7 @@ router.post('/info/:uniqueID', async (req, res, next) => {
             }
         } catch (err) {
             console.log(err)
-            res.render('doctor/profile/view', { doctor, msg: `${err.message}` })
+            res.render('doctor/profile/view', { doctor, msg: 'An Error Occured!!!' })
         }
     } else {
         res.redirect('/doctorLogin')
@@ -95,7 +95,7 @@ if (sess.email && sess.password && sess.identifier === 'doctor') {
         }
     } catch (err) {
         console.log(err)
-        res.render('doctor/profile/view', { doctor, msg: `${err.message}` })
+        res.render('doctor/profile/view', { doctor, msg: 'An Error Occured!!!' })
     }
     } else {
         res.redirect('/doctorLogin')
@@ -137,7 +137,7 @@ if (sess.email && sess.password && sess.identifier === 'doctor') {
         }
     } catch (err) {
         console.log(err)
-        res.render('doctor/profile/view', { doctor, msg: `${err.message}` })
+        res.render('doctor/profile/view', { doctor, msg: 'An Error Occured!!!' })
     }
     } else {
         res.redirect('/doctorLogin')
@@ -172,7 +172,7 @@ if (sess.email && sess.password && sess.identifier === 'doctor') {
         }
     } catch (err) {
         console.log(err)
-        res.render('doctor/profile/view', { doctor, msg: `${err.message}` })
+        res.render('doctor/profile/view', { doctor, msg: 'An Error Occured!!!' })
     }
     } else {
         res.redirect('/doctorLogin')
@@ -207,7 +207,7 @@ if (sess.email && sess.password && sess.identifier === 'doctor') {
         }
     } catch (err) {
         console.log(err)
-        res.render('doctor/profile/view', { doctor, msg: `${err.message}` })
+        res.render('doctor/profile/view', { doctor, msg: 'An Error Occured!!!' })
     }
     } else {
         res.redirect('/doctorLogin')

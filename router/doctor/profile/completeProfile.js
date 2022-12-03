@@ -53,7 +53,7 @@ router.post('/:id', async(req, res) => {
         }
     } catch(err) {
         console.log(err)
-        res.render('doctor/profile/completeProfile', { msg: `${err.message}`, check: false, id: req.params.id })
+        res.render('doctor/profile/completeProfile', { msg: 'An Error Occured!!!', check: false, id: req.params.id })
     }
 })
 
@@ -89,7 +89,7 @@ router.post('/:id/identity', async(req, res, next) => {
         }
     } catch(err) {
         console.log(err)
-        res.render('doctor/profile/completeProfile', { msg: `${err.message}`, check: true, id: req.params.id })
+        res.render('doctor/profile/completeProfile', { msg: 'An Error Occured!!!', check: true, id: req.params.id })
     }
 })
 

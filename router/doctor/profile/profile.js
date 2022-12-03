@@ -28,7 +28,7 @@ router.get('/', async(req, res) => {
             }
         } catch (err) {
             console.log(err)
-            res.render('doctor/auth/login', { msg: `${err.message}`})
+            res.render('doctor/auth/login', { msg: 'An Error Occured!!!'})
         }
     } else {
         res.redirect('/doctorLogin')

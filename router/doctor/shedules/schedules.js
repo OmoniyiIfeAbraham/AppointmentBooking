@@ -78,6 +78,7 @@ router.get('/:id', async(req, res, next) => {
 
 router.post('/:id', async(req, res, next) => {
     const sess = req.session
+    console.log('Musaaaaaa')
     if (sess.email && sess.password && sess.identifier === 'doctor') {
         console.log(req.body)
         const schedules = await scheduleMod.find({ doctor: req.params.id }).sort({ createdAt: -1 })
@@ -103,6 +104,9 @@ router.post('/:id', async(req, res, next) => {
                 const sameStart = await scheduleMod.findOne({ doctor: id, start: start })
                 const sameEnd = await scheduleMod.findOne({ doctor: id, end: end })
                 const same = await scheduleMod.find({ doctor: id })
+                const profile = await registerMod.findOne({ email: sess.email })
+                const person = await doctorMod.findOne({ uniqueID: profile._id })
+                const you  = await doctorMod.findOne({ email: sess.email })
                 if (same.length > 0) {
                     for (let i = 0; i <= same.length; i++) {
                         console.log(same[i])
@@ -118,19 +122,19 @@ router.post('/:id', async(req, res, next) => {
                         } else {
                             async function much() {
                                 if (sameStart && sameEnd) {
-                                    res.render('doctor/schedules/schedules', { msg: 'Schedule is already Occupied', id, schedules })
+                                    res.render('doctor/schedules/schedules', { msg: 'Schedule is already Occupied', id, schedules, schedules, unique: profile._id, you, ids: person._id })
                                 } else {
                                     if (ms2  < ms1) {
-                                        res.render('doctor/schedules/schedules', { msg: 'Start Date/Time Cannot be less than Current Date/Time', id, schedules })
+                                        res.render('doctor/schedules/schedules', { msg: 'Start Date/Time Cannot be less than Current Date/Time', id, schedules, schedules, unique: profile._id, you, ids: person._id })
                                     } else {
                                         if (ms3 < ms1) {
-                                            res.render('doctor/schedules/schedules', { msg: 'End Date/Time Cannot be less than Current Date/Time', id, schedules })
+                                            res.render('doctor/schedules/schedules', { msg: 'End Date/Time Cannot be less than Current Date/Time', id, schedules, schedules, unique: profile._id, you, ids: person._id })
                                         } else {
                                             if (ms3 < ms2) {
-                                                res.render('doctor/schedules/schedules', { msg: 'End Date/Time Cannot be less than Start Date/Time', id, schedules })
+                                                res.render('doctor/schedules/schedules', { msg: 'End Date/Time Cannot be less than Start Date/Time', id, schedules, schedules, unique: profile._id, you, ids: person._id })
                                             } else {
                                                 if (ms2 == ms3) {
-                                                    res.render('doctor/schedules/schedules', { msg: 'Start Date/Time Cannot be equal to End Date/Time', id, schedules })
+                                                    res.render('doctor/schedules/schedules', { msg: 'Start Date/Time Cannot be equal to End Date/Time', id, schedules, schedules, unique: profile._id, you, ids: person._id })
                                                 } else {
                                                     const schedule = new scheduleMod({
                                                         doctor: id,
@@ -172,19 +176,19 @@ router.post('/:id', async(req, res, next) => {
                 } else {
                             async function much() {
                                 if (sameStart && sameEnd) {
-                                    res.render('doctor/schedules/schedules', { msg: 'Schedule is already Occupied', id, schedules })
+                                    res.render('doctor/schedules/schedules', { msg: 'Schedule is already Occupied', id, schedules, schedules, unique: profile._id, you, ids: person._id })
                                 } else {
                                     if (ms2  < ms1) {
-                                        res.render('doctor/schedules/schedules', { msg: 'Start Date/Time Cannot be less than Current Date/Time', id, schedules })
+                                        res.render('doctor/schedules/schedules', { msg: 'Start Date/Time Cannot be less than Current Date/Time', id, schedules, schedules, unique: profile._id, you, ids: person._id })
                                     } else {
                                         if (ms3 < ms1) {
-                                            res.render('doctor/schedules/schedules', { msg: 'End Date/Time Cannot be less than Current Date/Time', id, schedules })
+                                            res.render('doctor/schedules/schedules', { msg: 'End Date/Time Cannot be less than Current Date/Time', id, schedules, schedules, unique: profile._id, you, ids: person._id })
                                         } else {
                                             if (ms3 < ms2) {
-                                                res.render('doctor/schedules/schedules', { msg: 'End Date/Time Cannot be less than Start Date/Time', id, schedules })
+                                                res.render('doctor/schedules/schedules', { msg: 'End Date/Time Cannot be less than Start Date/Time', id, schedules, schedules, unique: profile._id, you, ids: person._id })
                                             } else {
                                                 if (ms2 == ms3) {
-                                                    res.render('doctor/schedules/schedules', { msg: 'Start Date/Time Cannot be equal to End Date/Time', id, schedules })
+                                                    res.render('doctor/schedules/schedules', { msg: 'Start Date/Time Cannot be equal to End Date/Time', id, schedules, schedules, unique: profile._id, you, ids: person._id })
                                                 } else {
                                                     const schedule = new scheduleMod({
                                                         doctor: id,
@@ -240,11 +244,17 @@ router.post('/:id', async(req, res, next) => {
                     // }
                 }
             } else {
-                res.render('doctor/schedules/schedules', { msg: 'Fill all the Fields', id, schedules })
+                const profile = await registerMod.findOne({ email: sess.email })
+                const person = await doctorMod.findOne({ uniqueID: profile._id })
+                const you  = await doctorMod.findOne({ email: sess.email })
+                res.render('doctor/schedules/schedules', { msg: 'Fill all the Fields', id, schedules, unique: profile._id, you, ids: person._id })
             }
         } catch (err) {
             console.log(err)
-            res.render('doctor/schedules/schedules', { msg: `${err.message}` , id, schedules })
+            const profile = await registerMod.findOne({ email: sess.email })
+            const person = await doctorMod.findOne({ uniqueID: profile._id })
+            const you  = await doctorMod.findOne({ email: sess.email })
+            res.render('doctor/schedules/schedules', { msg: 'An Error Occured!!!' , id, schedules, unique: profile._id, you, ids: person._id })
         }
     } else {
         res.redirect('/doctorLogin')

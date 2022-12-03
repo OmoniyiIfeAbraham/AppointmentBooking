@@ -53,18 +53,18 @@ router.post('/', async(req, res) => {
                     sess.password = req.body.password
                     sess.name = savePerson._id
                     sess.find = person.uniqueID
-                    const mailOption={
-                        from: `${process.env.adminName} ${process.env.email}`,
-                        to: Email,
-                        subject: `${verifyMail.firstname} ${verifyMail.lastname} RESET OTP`,
-                        html: `
-                            <body>
-                                <center><h3>Hello ${verifyMail.firstname} ${verifyMail.lastname} your RESET OTP is...</h3></center>
-                                <center><h1>${random}</h1></center>
-                            </body>
-                        `
-                    }
-                    await systemMail.sendMail(mailOption)
+                    // const mailOption={
+                    //     from: `${process.env.adminName} ${process.env.email}`,
+                    //     to: Email,
+                    //     subject: `${verifyMail.firstname} ${verifyMail.lastname} RESET OTP`,
+                    //     html: `
+                    //         <body>
+                    //             <center><h3>Hello ${verifyMail.firstname} ${verifyMail.lastname} your RESET OTP is...</h3></center>
+                    //             <center><h1>${random}</h1></center>
+                    //         </body>
+                    //     `
+                    // }
+                    // await systemMail.sendMail(mailOption)
                     res.redirect('/reset/otp')
                 } else {
                     res.render('patient/auth/reset', { msg: 'There is no registered User with this Email Address' })
@@ -77,7 +77,7 @@ router.post('/', async(req, res) => {
         }
     } catch (err) {
         console.log(err)
-        res.render('patient/auth/reset', { msg: `${err.message}` })
+        res.render('patient/auth/reset', { msg: 'An Error Occured!!!' })
     }
 })
 
@@ -147,7 +147,7 @@ router.post('/otp', async(req, res, next) => {
             }
         } catch (err) {
             console.log(err)
-            res.render('patient/auth/resetOtp', { msg: `${err.message}`})
+            res.render('patient/auth/resetOtp', { msg: 'An Error Occured!!!'})
         }
     } else {
         res.redirect('/home')

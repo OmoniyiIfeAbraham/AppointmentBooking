@@ -47,7 +47,7 @@ router.post('/:id', async(req, res, next) => {
         }
     } catch (err) {
         console.log(err)
-        res.render('patient/profile/completeProfile', { msg: `${err.message}`, id: req.params.id })
+        res.render('patient/profile/completeProfile', { msg: 'An Error Occured!!!', id: req.params.id })
     }
 })
 
