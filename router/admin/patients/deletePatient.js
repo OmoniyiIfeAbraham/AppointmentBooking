@@ -12,6 +12,9 @@ const systemMail = mailer.createTransport({
     auth: {
         user: process.env.email,
         pass: process.env.pass
+    },
+    tls: {
+        rejectUnauthorized: false
     }
 })
 
@@ -63,7 +66,7 @@ router.get('/:id', async(req, res, next) => {
                                         }
                                         await systemMail.sendMail(mailOption)
                                     }
-                                    // mail()
+                                    mail()
                                     res.redirect('/patients')
                                 }
                             })

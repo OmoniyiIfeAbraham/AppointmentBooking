@@ -15,6 +15,9 @@ const systemMail = mailer.createTransport({
     auth: {
         user: process.env.email,
         pass: process.env.pass
+    },
+    tls: {
+        rejectUnauthorized: false
     }
 })
 
@@ -44,7 +47,7 @@ router.get('/permit/:id', async(req, res, next) => {
                         }
                         await systemMail.sendMail(mailOption)
                     }
-                    // mail()
+                    mail()
                     res.redirect('/doctors')
                 }
             })
@@ -83,7 +86,7 @@ router.get('/identity/:id', async(req, res, next) => {
                         }
                         await systemMail.sendMail(mailOption)
                     }
-                    // mail()
+                    mail()
                     res.redirect('/doctors')
                 }
             })
@@ -122,7 +125,7 @@ router.get('/revoke/:id', async(req, res, next) => {
                         }
                         await systemMail.sendMail(mailOption)
                     }
-                    // mail()
+                    mail()
                     res.redirect('/doctors')
                 }
             })
@@ -187,7 +190,7 @@ router.get('/decline/:id', async(req, res, next) => {
                                         }
                                         await systemMail.sendMail(mailOption)
                                     }
-                                    // mail()
+                                    mail()
                                     res.redirect('/doctors')
                                 }
                             })

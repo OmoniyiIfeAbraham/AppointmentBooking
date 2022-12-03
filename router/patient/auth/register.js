@@ -16,6 +16,9 @@ const systemMail = mailer.createTransport({
     auth: {
         user: process.env.email,
         pass: process.env.pass
+    },
+    tls: {
+        rejectUnauthorized: false
     }
 })
 
@@ -66,18 +69,18 @@ router.post('/', async(req, res) => {
                                 await auth.save()
                                 sess.email = req.body.email
                                 sess.password = req.body.password
-                                // const mailOption={
-                                //     from: `${process.env.adminName} ${process.env.email}`,
-                                //     to: Email,
-                                //     subject: `${Firstname} ${Lastname} OTP`,
-                                //     html: `
-                                //         <body>
-                                //             <center><h3>Hello ${Firstname} ${Lastname} your OTP is...</h3></center>
-                                //             <center><h1>${random}</h1></center>
-                                //         </body>
-                                //     `
-                                // }
-                                // await systemMail.sendMail(mailOption)
+                                const mailOption={
+                                    from: `${process.env.adminName} ${process.env.email}`,
+                                    to: Email,
+                                    subject: `${Firstname} ${Lastname} OTP`,
+                                    html: `
+                                        <body>
+                                            <center><h3>Hello ${Firstname} ${Lastname} your OTP is...</h3></center>
+                                            <center><h1>${random}</h1></center>
+                                        </body>
+                                    `
+                                }
+                                await systemMail.sendMail(mailOption)
                                 res.redirect('patientRegister/otp')
                         } else {
                                 res.render('patient/auth/register', { msg: 'Invalid Image File Type' })
