@@ -55,11 +55,11 @@ router.get('/:id', async(req, res, next) => {
                                     async function mail() {
                                         const mailOption={
                                             from: `${process.env.adminName} ${process.env.email}`,
-                                            to: locate.email,
-                                            subject: `${locate.firstname} ${locate.lastname} ACCOUNT`,
+                                            to: person.email,
+                                            subject: `${person.firstname} ${person.lastname} ACCOUNT`,
                                             html: `
                                                 <body>
-                                                    <center><h3>Hello ${locate.firstname} ${locate.lastname}</h3></center>
+                                                    <center><h3>Hello ${person.firstname} ${person.lastname}</h3></center>
                                                     <center><h5>Your Account has been Deleted</h5></center>
                                                 </body>
                                             `
