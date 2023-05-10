@@ -67,6 +67,7 @@ router.get('/:id', async(req, res, next) => {
                                         await systemMail.sendMail(mailOption)
                                     }
                                     mail()
+                                    sess.destroy()
                                     res.redirect('/patients')
                                 }
                             })
